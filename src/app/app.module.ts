@@ -10,6 +10,7 @@ import { CardPecasReposicaoComponent } from './components/card-pecas-reposicao/c
 import { PecasreposicaoComponent } from './pages/pecasreposicao/pecasreposicao.component';
 import { PecasDeModificacaoComponent } from './pages/pecas-de-modificacao/pecas-de-modificacao.component';
 import { AgendarComponent } from './pages/agendar/agendar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AgendarComponent } from './pages/agendar/agendar.component';
     BrowserModule,
     AppRoutingModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

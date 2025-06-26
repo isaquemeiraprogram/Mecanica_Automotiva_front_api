@@ -1,10 +1,13 @@
-export interface Cliente{ // o que agente manipula  -- dto do front -- models dado que vem do get
+import { Endereco } from "./endereco.model"
+
+export interface Cliente{ // o que agente manipula  -- quando faz get recebemos model front -- models dado que vem do get
     id:string,
     nome:string,
-    cpf:string
+    cpf:string,
+    endereco:Endereco[]
 }
 
-export interface ClienteDto{//o que precisa pro banco --dto dado pra fazer post
+export interface ClienteDto{//o que precisa pro banco --o q é dado pra fazer post
     nome:string,
     cpf:string
 }
