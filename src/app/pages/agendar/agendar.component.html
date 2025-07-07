@@ -1,1 +1,51 @@
-<p>agendar works!</p>
+<div class="Container">
+
+    <div class="tipoServico">
+        <div class="Servico">
+
+            <!-- manutencao -->
+            <input type="text" placeholder="Pesquisa">
+            <p> Reparos</p>
+            <input type="checkbox" value="1">Balanceamento 
+            <input type="checkbox" value="2">Limpeza do motor
+            <input type="checkbox" value="3">troca de oleo do cambio
+            <input type="checkbox" value="4">geometria
+            <input type="checkbox" value="5">revisao
+
+        </div>
+
+        <div class="Servico">
+
+            <!-- upgrade -->
+            <input type="text" placeholder="Pesquisa">
+
+            <p>Modificações</p>
+            <input type="checkbox" value="1">instalacao de saia laterar
+            <input type="checkbox" value="1">Pintura
+            <input type="checkbox" value="1">Regulagem de altura de suspensao
+            <input type="checkbox" value="1">troca de pneus
+            <input type="checkbox" value="1">troca de calota
+
+        </div>
+    </div>
+
+
+    <div class="DadosServico">
+        <div class="DataHora">
+            <input type="date">
+            <input type="time">
+        </div>
+        
+        <input  class="Queixa" type="text" placeholder="Queixa">
+        <input type="text" placeholder="Valor Total">
+        <input type="number" placeholder="Tempo De Servico Total">
+        <input type="text" placeholder="clienteid">
+        <br>
+
+        <p>pecas</p>
+        <ul>
+            <li *ngFor="let item of servicosSelecionados">{{servico}}</li>
+        </ul>
+        
+    </div>
+</div>

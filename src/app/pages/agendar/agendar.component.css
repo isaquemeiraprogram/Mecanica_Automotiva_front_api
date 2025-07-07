@@ -1,0 +1,46 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.Container {
+    background-color: rgb(49, 49, 49);
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Servico {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 25vw;
+    height: 35vh;
+    justify-content: center;
+}
+
+.Servico input{
+    align-self: center;
+    width: 80%;
+}
+
+.DadosServico {
+    background-color: rgb(91, 91, 91);
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: 70vh;
+}
+
+.DataHora{
+    display: flex;
+}
+
+.Queixa{
+    height: 20%;
+}
+
+.DadosServico input{
+    width: 80%;
+}

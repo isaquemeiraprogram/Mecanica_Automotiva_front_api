@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PecasReposicao } from 'src/app/models/PecasReposicao.model';
+import { Peca } from 'src/app/models/Peca.model';
 
 @Component({
   selector: 'app-card-pecas-reposicao',
@@ -7,5 +7,5 @@ import { PecasReposicao } from 'src/app/models/PecasReposicao.model';
   styleUrls: ['./card-pecas-reposicao.component.css']
 })
 export class CardPecasReposicaoComponent {
-  @Input() pecas_reposica!:PecasReposicao;
+  @Input() pecas_reposica!:Peca;
 }
