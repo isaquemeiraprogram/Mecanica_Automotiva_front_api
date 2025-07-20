@@ -1,5 +1,4 @@
-import { DatePipe } from "@angular/common";
-import { Peca } from "./Peca.model";
+import { Peca } from "./Produto.model";
 
 export interface servico{
     nome:string,

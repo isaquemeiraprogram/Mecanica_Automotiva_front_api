@@ -6,7 +6,7 @@
             <!-- manutencao -->
             <input type="text" placeholder="Pesquisa">
             <p> Reparos</p>
-            <input type="checkbox" value="1">Balanceamento 
+            <input type="checkbox" value="1">Balanceamento
             <input type="checkbox" value="2">Limpeza do motor
             <input type="checkbox" value="3">troca de oleo do cambio
             <input type="checkbox" value="4">geometria
@@ -35,17 +35,20 @@
             <input type="date">
             <input type="time">
         </div>
-        
-        <input  class="Queixa" type="text" placeholder="Queixa">
+
+        <input class="Queixa" type="text" placeholder="Queixa">
         <input type="text" placeholder="Valor Total">
         <input type="number" placeholder="Tempo De Servico Total">
         <input type="text" placeholder="clienteid">
+        <div class="dadoscliente">
+            
+        </div>
         <br>
 
         <p>pecas</p>
         <ul>
             <li *ngFor="let item of servicosSelecionados">{{servico}}</li>
         </ul>
-        
+
     </div>
 </div>

@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { PecasreposicaoComponent } from './pages/pecasreposicao/pecasreposicao.component';
 import { PecasDeModificacaoComponent } from './pages/pecas-de-modificacao/pecas-de-modificacao.component';
 import { AgendarComponent } from './pages/agendar/agendar.component';
+import { TestesComponent } from './pages/testes/testes.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: "agendar",
     component: AgendarComponent
+  },
+  {
+    path:"teste",
+    component: TestesComponent
   }
 
 ];

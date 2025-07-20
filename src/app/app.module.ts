@@ -11,6 +11,9 @@ import { PecasreposicaoComponent } from './pages/pecasreposicao/pecasreposicao.c
 import { PecasDeModificacaoComponent } from './pages/pecas-de-modificacao/pecas-de-modificacao.component';
 import { AgendarComponent } from './pages/agendar/agendar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TestesComponent } from './pages/testes/testes.component';
+import { AppComponentComponent } from './app.component/app.component.component';
+import { AppcomponentComponent } from './appcomponent/appcomponent.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { HttpClientModule } from '@angular/common/http';
     CardPecasReposicaoComponent,
     PecasreposicaoComponent,
     PecasDeModificacaoComponent,
-    AgendarComponent
+    AgendarComponent,
+    TestesComponent,
+    AppComponentComponent,
+    AppcomponentComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Peca } from 'src/app/models/Peca.model';
+import { Peca } from 'src/app/models/Produto.model';
 
 @Component({
   selector: 'app-card-pecas-reposicao',

@@ -1,0 +1,18 @@
+<button (click)="getAllClientesAsync()">Clientes</button>
+
+<ul>
+    <li *ngFor="let cliente of clientList">
+        Nome: {{cliente.nome}}
+        Cpf: {{cliente.cpf}}
+        Endereco: {{cliente.endereco}}
+    </li>
+</ul>
+
+<input type="text" [(ngModel)]="clienteId" placeholder="Digite o id do cliente">
+<button (click)="getClienteById()">Achar cliente</button>
+
+<p>Nome: {{cliente.nome}}</p>
+<p>Cpf: {{cliente.cpf}}</p>
+<p>Endereco: {{cliente.endereco}}</p>
+
+
