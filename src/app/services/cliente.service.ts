@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cliente } from '../models/cliente.model';
+import { Cliente, ClienteDto } from '../models/cliente.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,10 @@ export class ClienteService {
   getByIdCliente(id:string):Observable<Cliente>
   {
     return this.http.get<Cliente>(this.link+"/"+id)
+  }
+
+  addCliente(dto:ClienteDto):Observable<Cliente>{
+    return this.http.post<Cliente>(this.link, dto)
   }
 }
 // npx ng g service services/cliente gera um service

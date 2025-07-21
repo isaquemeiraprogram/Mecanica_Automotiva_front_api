@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Cliente } from 'src/app/models/cliente.model';
+import { Cliente, ClienteDto } from 'src/app/models/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
 
 @Component({
@@ -8,14 +8,14 @@ import { ClienteService } from 'src/app/services/cliente.service';
   styleUrls: ['./testes.component.css']
 })
 export class TestesComponent {
-  clienteId!:string;
-  cliente!:Cliente;
+  clienteId!: string;
+  dto!: ClienteDto
+  cliente!: Cliente;
   clientList: Cliente[] = [];
 
   constructor(private clienteService: ClienteService) { }
 
-  getAllClientesAsync()
-  {
+  getAllClientesAsync() {
     this.clienteService.getAllClientesAsync().subscribe({
       next: dados => {
         this.clientList = dados
@@ -25,9 +25,19 @@ export class TestesComponent {
     })
   }
 
-  getClienteById(){
+  getClienteById() {
     this.clienteService.getByIdCliente(this.clienteId).subscribe({
-      next: dados =>{
+      next: dados => {
+        this.cliente = dados
+        console.log(dados)
+      },
+      error: er => console.error(er)
+    })
+  }
+
+  addCliente() {
+    this.clienteService.addCliente(this.dto).subscribe({
+      next: dados => {
         this.cliente = dados
         console.log(dados)
       }

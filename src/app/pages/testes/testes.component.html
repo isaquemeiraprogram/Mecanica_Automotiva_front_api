@@ -2,9 +2,9 @@
 
 <ul>
     <li *ngFor="let cliente of clientList">
-        Nome: {{cliente.nome}}
-        Cpf: {{cliente.cpf}}
-        Endereco: {{cliente.endereco}}
+        <p>Nome: {{cliente.nome}} </p>
+        <p>Cpf: {{cliente.cpf}}</p>
+        <p>Endereco: {{cliente.endereco}}</p>
     </li>
 </ul>
 
@@ -14,5 +14,9 @@
 <p>Nome: {{cliente.nome}}</p>
 <p>Cpf: {{cliente.cpf}}</p>
 <p>Endereco: {{cliente.endereco}}</p>
+
+<input type="text" [(ngModel)]="dto.nome" placeholder="Nome">
+<input type="text" [(ngModel)]="dto.cpf" placeholder="cpf">
+<button (click)="addCliente()">Enviar</button>
 
 
