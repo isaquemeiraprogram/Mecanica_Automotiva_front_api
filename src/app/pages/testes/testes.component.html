@@ -1,22 +1,61 @@
-<button (click)="getAllClientesAsync()">Clientes</button>
+<div class="container">
 
-<ul *ngIf="cliente">
-    <li *ngFor="let cliente of clientList">
-        <p>Nome: {{cliente.nome}} </p>
-        <p>Cpf: {{cliente.cpf}}</p>
-        <p>Endereco: {{cliente.endereco}}</p>
-    </li>
-</ul>
 
-<input type="text" [(ngModel)]="clienteId" placeholder="Digite o id do cliente">
-<button (click)="getClienteById()">Achar cliente</button>
-<div class="clienteId" *ngIf="clienteEncontrado ngIfElse 'Cliente Não Encontrado'">
-    <p>Nome: {{cliente.nome}}</p>
-    <p>Cpf: {{cliente.cpf}}</p>
-    <p>Endereco: {{cliente.endereco}}</p>
+    <div class="obterTodosClientes">
+
+        <button (click)="getAllClientesAsync()">Obter Todos Clientes</button>
+
+        <ul *ngIf="clientList">
+            <li *ngFor="let cliente of clientList">
+                <p>Nome: {{cliente.nome}} </p>
+                <p>Cpf: {{cliente.cpf}}</p>
+                <p>Endereco: {{cliente.endereco}}</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="buscarCliente">
+        <input type="text" [(ngModel)]="clienteIdget" placeholder="Digite o id do cliente">
+        <button (click)="getClienteByIdAsync()">Achar cliente</button>
+
+        <div class="clienteId" *ngIf="clienteSelecionado.id">
+            <p>Nome: {{clienteSelecionado.nome}}</p>
+            <p>Cpf: {{clienteSelecionado.cpf}}</p>
+            <p>Endereco: {{clienteSelecionado.endereco}}</p>
+        </div>
+    </div>
+
+    <div class="adicionarcliente">
+        <input type="text" [(ngModel)]="ClientedtoAdd.nome" placeholder="Nome">
+        <input type="text" [(ngModel)]="ClientedtoAdd.cpf" placeholder="cpf">
+        <button (click)="addClienteAsync()">Adicionar Cliente</button>
+
+        <div class="clienteId" *ngIf="clienteAdicionado.id">
+            <p>Nome: {{clienteAdicionado.nome}}</p>
+            <p>Cpf: {{clienteAdicionado.cpf}}</p>
+            <p>Endereco: {{clienteAdicionado.endereco}}</p>
+
+        </div>
+        
+    </div>
+
+    <div class="atualizarCliente">
+        <input type="text" [(ngModel)]="ClientedtoUpdate.cpf" placeholder="informe o id do cliente a atualizar">
+        <input type="text" [(ngModel)]="ClientedtoUpdate.nome" placeholder="Nome">
+        <input type="text" [(ngModel)]="ClientedtoUpdate.cpf" placeholder="cpf">
+        <button (click)="updateClienteAsync()">Atualiza Cliente</button>
+
+        <div class="cliente" *ngIf="clienteAtualizado.id && ClienteidUpdate">
+            <p>Nome: {{clienteAtualizado.nome}}</p>
+            <p>Cpf: {{clienteAtualizado.cpf}}</p>
+            <p>Endereco: {{clienteAtualizado.endereco}}</p>
+        </div>
+    </div>
+
+    <div class="deletarcliente">
+        <input type="text" [(ngModel)]="clienteIdDelete" placeholder="informe o id do cliente a remover">
+        <button (click)="deleteClienteAsync()">Excluir cliente</button>
+        <p *ngIf="clienteDeletado">{{clienteDeletado}}</p>
+    </div>
+
 </div>
-
-
-<input type="text" [(ngModel)]="dto.nome" placeholder="Nome">
-<input type="text" [(ngModel)]="dto.cpf" placeholder="cpf">
-<button (click)="addCliente()">Enviar</button>

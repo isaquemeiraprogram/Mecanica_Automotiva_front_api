@@ -15,16 +15,21 @@ export class ClienteService {
     return this.http.get<Cliente[]>(this.link)
   }
 
-  getByIdCliente(id: string): Observable<Cliente> {
+  getByIdClienteAsync(id: string): Observable<Cliente> {
     return this.http.get<Cliente>(this.link + "/" + id)
   }
 
-  addCliente(dto: ClienteDto): Observable<Cliente> {
+  addClienteAsync(dto: ClienteDto): Observable<Cliente> {
     return this.http.post<Cliente>(this.link, dto)
   }
 
-  deleteCliente(id: string): Observable<string> {
+  updateClienteAsync(id: string, dto: ClienteDto): Observable<Cliente> {
+    return this.http.put<Cliente>(this.link + "/" + id, dto)
+  }
+
+  deleteClienteAsync(id: string): Observable<string> {
     return this.http.delete<string>(this.link + "/" + id)
   }
+
 }
 // npx ng g service services/cliente gera um service

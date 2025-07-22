@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Cliente, ClienteDto } from 'src/app/models/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
@@ -8,11 +9,26 @@ import { ClienteService } from 'src/app/services/cliente.service';
   styleUrls: ['./testes.component.css']
 })
 export class TestesComponent {
-  clienteId!: string;
-  dto: ClienteDto = { nome: "", cpf: "" }
-  cliente: Cliente = {id: "",nome: "",cpf: "",endereco: []};
+
+  //obter todos clientes
   clientList: Cliente[] = [];
-  clienteEncontrado: boolean = false;
+
+  //achar cliente
+  clienteIdget!: string;
+  clienteSelecionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
+
+  //add cliente 
+  ClientedtoAdd: ClienteDto = { nome: "", cpf: "" }
+  clienteAdicionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
+
+  //update
+  ClienteidUpdate !: string
+  ClientedtoUpdate: ClienteDto = { nome: "", cpf: "" }
+  clienteAtualizado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
+
+  //deletar cliente
+  clienteIdDelete!: string;
+  clienteDeletado!: string
 
   constructor(private clienteService: ClienteService) { }
 
@@ -26,34 +42,48 @@ export class TestesComponent {
     })
   }
 
-  getClienteById() {
-    this.clienteService.getByIdCliente(this.clienteId).subscribe({
+  getClienteByIdAsync() {
+    this.clienteService.getByIdClienteAsync(this.clienteIdget).subscribe({
       next: dados => {
-        this.cliente = dados
+        this.clienteSelecionado = dados
         console.log(dados)
-        this.clienteEncontrado = true
+      },
+      error: err => {
+        console.error("erro ao obter os dados", err);
+
+      }
+    })
+  }
+
+  addClienteAsync() {
+    this.clienteService.addClienteAsync(this.ClientedtoAdd).subscribe({
+      next: dados => {
+        this.clienteAdicionado = dados
+        console.log(dados)
       },
       error: er => console.error(er)
     })
   }
 
-  addCliente() {
-    this.clienteService.addCliente(this.dto).subscribe({
+  updateClienteAsync() {
+    this.clienteService.updateClienteAsync(this.ClienteidUpdate, this.ClientedtoUpdate).subscribe({
       next: dados => {
-        this.cliente = dados
+        this.clienteAtualizado = dados;
         console.log(dados)
       }
     })
   }
 
-  
-  deleteCliente(){
-    this.clienteService.deleteCliente(this.clienteId).subscribe({
+  deleteClienteAsync() {
+    this.clienteService.deleteClienteAsync(this.clienteIdDelete).subscribe({
       next: dados => {
+        this.clienteDeletado = "Cliente Deletado Com Sucesso";
         console.log(dados)
+      },
+      error: err => {
+        console.error("erro ao obter os dados", err)
+        alert("Cliente Não Encontrado");
       }
     })
   }
-
-
 }
