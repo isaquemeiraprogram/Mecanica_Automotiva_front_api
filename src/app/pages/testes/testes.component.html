@@ -1,6 +1,6 @@
 <button (click)="getAllClientesAsync()">Clientes</button>
 
-<ul>
+<ul *ngIf="cliente">
     <li *ngFor="let cliente of clientList">
         <p>Nome: {{cliente.nome}} </p>
         <p>Cpf: {{cliente.cpf}}</p>
@@ -10,13 +10,13 @@
 
 <input type="text" [(ngModel)]="clienteId" placeholder="Digite o id do cliente">
 <button (click)="getClienteById()">Achar cliente</button>
+<div class="clienteId" *ngIf="clienteEncontrado ngIfElse 'Cliente Não Encontrado'">
+    <p>Nome: {{cliente.nome}}</p>
+    <p>Cpf: {{cliente.cpf}}</p>
+    <p>Endereco: {{cliente.endereco}}</p>
+</div>
 
-<p>Nome: {{cliente.nome}}</p>
-<p>Cpf: {{cliente.cpf}}</p>
-<p>Endereco: {{cliente.endereco}}</p>
 
 <input type="text" [(ngModel)]="dto.nome" placeholder="Nome">
 <input type="text" [(ngModel)]="dto.cpf" placeholder="cpf">
 <button (click)="addCliente()">Enviar</button>
-
-

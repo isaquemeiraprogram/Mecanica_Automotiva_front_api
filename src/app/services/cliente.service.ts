@@ -8,21 +8,23 @@ import { Cliente, ClienteDto } from '../models/cliente.model';
 })
 export class ClienteService {
 
-  private link ="https://localhost:7190/api/Cliente";
-  constructor(private http:HttpClient) { }
+  private link = "https://localhost:7190/api/Cliente";
+  constructor(private http: HttpClient) { }
 
-  getAllClientesAsync():Observable<Cliente[]>
-  {
+  getAllClientesAsync(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.link)
   }
 
-  getByIdCliente(id:string):Observable<Cliente>
-  {
-    return this.http.get<Cliente>(this.link+"/"+id)
+  getByIdCliente(id: string): Observable<Cliente> {
+    return this.http.get<Cliente>(this.link + "/" + id)
   }
 
-  addCliente(dto:ClienteDto):Observable<Cliente>{
+  addCliente(dto: ClienteDto): Observable<Cliente> {
     return this.http.post<Cliente>(this.link, dto)
+  }
+
+  deleteCliente(id: string): Observable<string> {
+    return this.http.delete<string>(this.link + "/" + id)
   }
 }
 // npx ng g service services/cliente gera um service

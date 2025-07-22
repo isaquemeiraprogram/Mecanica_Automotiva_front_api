@@ -9,9 +9,10 @@ import { ClienteService } from 'src/app/services/cliente.service';
 })
 export class TestesComponent {
   clienteId!: string;
-  dto!: ClienteDto
-  cliente!: Cliente;
+  dto: ClienteDto = { nome: "", cpf: "" }
+  cliente: Cliente = {id: "",nome: "",cpf: "",endereco: []};
   clientList: Cliente[] = [];
+  clienteEncontrado: boolean = false;
 
   constructor(private clienteService: ClienteService) { }
 
@@ -30,6 +31,7 @@ export class TestesComponent {
       next: dados => {
         this.cliente = dados
         console.log(dados)
+        this.clienteEncontrado = true
       },
       error: er => console.error(er)
     })
@@ -39,6 +41,15 @@ export class TestesComponent {
     this.clienteService.addCliente(this.dto).subscribe({
       next: dados => {
         this.cliente = dados
+        console.log(dados)
+      }
+    })
+  }
+
+  
+  deleteCliente(){
+    this.clienteService.deleteCliente(this.clienteId).subscribe({
+      next: dados => {
         console.log(dados)
       }
     })
