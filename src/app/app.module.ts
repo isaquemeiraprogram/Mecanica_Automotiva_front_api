@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './pages/home/home.component';
 import { CardPecasReposicaoComponent } from './components/card-pecas-reposicao/card-pecas-reposicao.component';
 import { PecasreposicaoComponent } from './pages/pecasreposicao/pecasreposicao.component';
@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TestesComponent } from './pages/testes/testes.component';
 import { AppComponentComponent } from './app.component/app.component.component';
 import { AppcomponentComponent } from './appcomponent/appcomponent.component';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,11 @@ import { AppcomponentComponent } from './appcomponent/appcomponent.component';
     AppRoutingModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    NgxMaskDirective
   ],
-  providers: [],
+  providers: [provideNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
