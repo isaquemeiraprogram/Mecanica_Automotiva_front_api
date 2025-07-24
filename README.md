@@ -1,3 +1,6 @@
+npm i baixar node modules botar mascara pr enviar dados no formato certo
+npm install ngx-mask --save
+
 # Projeto2005
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
