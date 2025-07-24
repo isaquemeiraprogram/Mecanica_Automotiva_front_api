@@ -30,7 +30,7 @@ export class TestesComponent {
 
     this.form = this.fb.group({
       id: [""],
-      nome: ["", [Validators.required]],
+      nome: ["", [Validators.required, Validators.maxLength(80)]],
       cpf: ["", [Validators.required, Validators.minLength(14)]] // 14 = 11 dígitos + máscara
     })
   }
@@ -69,11 +69,6 @@ export class TestesComponent {
     return true;
   }
 
-
-
-
-
-
   getAllClientesAsync() {
     this.clienteService.getAllClientesAsync().subscribe({
       next: dados => {
@@ -100,46 +95,41 @@ export class TestesComponent {
   //add cliente 
   clienteAdicionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
 
-  addClienteAsync() {
-
-    if (!this.validarFormulario()) {
-      return; //se form retornar alse ele interrompe 
-    }
-
-    const ClientedtoAdd: ClienteDto = this.form.value;
-
-    this.clienteService.addClienteAsync(ClientedtoAdd).subscribe({
-      next: dados => {
-        this.clienteAdicionado = dados
-        console.log(dados)
-        this.form.reset();
-        this.atualizar = false;
-      },
-      error: er => console.error(er)
-    })
-  }
-
-
-
   //update talves nao precise
   ClienteidUpdate !: string
   clienteAtualizado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
 
-  updateClienteAsync() {
+  FormClienteAsync() {
 
     if (!this.validarFormulario()) {
-      return;
+      return; //se form retornar false ele interrompe 
     }
 
-    const ClientedtoUpdate: ClienteDto = this.form.value;
+    const Clientedto: ClienteDto = this.form.value;
 
-    this.clienteService.updateClienteAsync(this.ClienteidUpdate, ClientedtoUpdate).subscribe({
-      next: dados => {
-        this.clienteAtualizado = dados;
-        console.log(dados)
-      }
-    })
+    if (this.atualizar) {
+        this.clienteService.updateClienteAsync(this.ClienteidUpdate, Clientedto).subscribe({
+          next: dados => {
+            this.clienteAtualizado = dados;
+            console.log(dados)
+          }
+        })
+    }
+    else {
+
+
+      this.clienteService.addClienteAsync(Clientedto).subscribe({
+        next: dados => {
+          this.clienteAdicionado = dados
+          console.log(dados)
+        },
+        error: er => console.error(er)
+      })
+    }
+
+    this.form.reset();
   }
+
 
   deleteClienteAsync() {
     this.clienteService.deleteClienteAsync(this.clienteIdDelete).subscribe({

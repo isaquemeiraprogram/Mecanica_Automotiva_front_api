@@ -1,6 +1,5 @@
 <div class="container">
 
- <!-- nome com maximo de 80 caracteres -->
     <div class="obterTodosClientes">
 
         <button (click)="getAllClientesAsync()">Obter Todos Clientes</button>
@@ -14,6 +13,7 @@
         </ul>
     </div>
 
+
     <div class="buscarCliente">
         <input type="text" [(ngModel)]="clienteIdget" placeholder="Digite o id do cliente">
         <button (click)="getClienteByIdAsync()">Achar cliente</button>
@@ -25,37 +25,36 @@
         </div>
     </div>
 
-    <div class="adicionarcliente">
-        <input type="text" [(ngModel)]="ClientedtoAdd.nome" placeholder="Nome">
-        <input type="text" [(ngModel)]="ClientedtoAdd.cpf" placeholder="cpf">
-        <button (click)="addClienteAsync()">Adicionar Cliente</button>
-
-        <div class="clienteId" *ngIf="clienteAdicionado.id">
-            <p>Nome: {{clienteAdicionado.nome}}</p>
-            <p>Cpf: {{clienteAdicionado.cpf}}</p>
-            <p>Endereco: {{clienteAdicionado.endereco}}</p>
-
-        </div>
-        
-    </div>
-
-    <div class="atualizarCliente">
-        <input type="text" [(ngModel)]="ClientedtoUpdate.cpf" placeholder="informe o id do cliente a atualizar">
-        <input type="text" [(ngModel)]="ClientedtoUpdate.nome" placeholder="Nome">
-        <input type="text" [(ngModel)]="ClientedtoUpdate.cpf" placeholder="cpf">
-        <button (click)="updateClienteAsync()">Atualiza Cliente</button>
-
-        <div class="cliente" *ngIf="clienteAtualizado.id && ClienteidUpdate">
-            <p>Nome: {{clienteAtualizado.nome}}</p>
-            <p>Cpf: {{clienteAtualizado.cpf}}</p>
-            <p>Endereco: {{clienteAtualizado.endereco}}</p>
-        </div>
-    </div>
-
     <div class="deletarcliente">
         <input type="text" [(ngModel)]="clienteIdDelete" placeholder="informe o id do cliente a remover">
         <button (click)="deleteClienteAsync()">Excluir cliente</button>
         <p *ngIf="clienteDeletado">{{clienteDeletado}}</p>
     </div>
 
-</div>
+    <div class="selecionarModo">
+        
+        <div class="Opcao">
+            <!-- isso [] converte a string pra true ou false, os dois radio devem ter o mesmo nome seno eles nao agrupam-->
+            <input type="radio" name="modo" [(ngModel)]="atualizar" [value]="true" />Atualizar
+            <input type="radio" name="modo" [(ngModel)]="atualizar" [value]="false" />Adicionar
+        </div>
+
+        <h2>{{ atualizar ? 'Atualizar Pessoa' : 'Adicionar Pessoa' }}</h2>
+
+        <form [formGroup]="form" (ngSubmit)="FormClienteAsync()" class="formulario">
+
+            <div class="formulario" *ngIf="atualizar">
+                <input type="text" [(ngModel)]="ClienteidUpdate" placeholder="Informe o id do usuario">
+            </div>
+
+            <input class="form-control" formControlName="nome" placeholder="informe seu nome" />
+            <p *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">Nome Obrigatorio</p>
+
+            <input class="form-control" formControlName="cpf" mask="000.000.000-00" placeholder="informe sue cpf" />
+
+            <p *ngIf="form.get('cpf')?.invalid && form.get('cpf')?.touched">CPF Obrigatorio</p>
+
+            <!-- botao do tipo submit envia o formulario pra requisicao -->
+            <button type="submit">enviar</button>
+        </form>
+    </div>

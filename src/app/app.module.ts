@@ -35,7 +35,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgxMaskDirective
+    NgxMaskDirective,
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]

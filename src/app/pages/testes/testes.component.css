@@ -1,16 +1,16 @@
-.container{
+.container {
     display: flex;
     margin: 20px;
     justify-content: center;
 }
 
-.obterTodosClientes{
+.obterTodosClientes {
     background-color: aqua;
     width: 200px;
     height: 200px;
 }
 
-.buscarCliente{
+.buscarCliente {
     background-color: aqua;
     margin: 20px;
     display: flex;
@@ -19,7 +19,7 @@
     height: 200px;
 }
 
-.adicionarcliente{
+.adicionarcliente {
     background-color: aqua;
     margin: 20px;
     display: flex;
@@ -28,7 +28,7 @@
     height: 200px;
 }
 
-.atualizarCliente{
+.atualizarCliente {
     background-color: aqua;
     margin: 20px;
     display: flex;
@@ -37,11 +37,21 @@
     height: 200px;
 }
 
-.deletarcliente{
+.deletarcliente {
     background-color: aqua;
     margin: 20px;
     display: flex;
     flex-direction: column;
     width: 200px;
     height: 200px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.selecionarModo {
+    display: flex;
+    flex-direction: column;
 }
