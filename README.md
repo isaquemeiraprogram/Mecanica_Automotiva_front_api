@@ -1,4 +1,5 @@
 npm i baixar node modules botar mascara pr enviar dados no formato certo
+
 npm install --save ngx-mask@16.4.1
 
 # Mecanica Automotiva front
