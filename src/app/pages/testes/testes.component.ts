@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cliente, ClienteDto } from 'src/app/models/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
@@ -9,7 +9,7 @@ import { ClienteService } from 'src/app/services/cliente.service';
   templateUrl: './testes.component.html',
   styleUrls: ['./testes.component.css']
 })
-export class TestesComponent {
+export class TestesComponent implements OnInit {
 
   //obter todos clientes
   clientList: Cliente[] = [];
@@ -23,50 +23,69 @@ export class TestesComponent {
   clienteDeletado!: string
 
   //formulario
-  form: FormGroup;
+  formAdd!: FormGroup;
+  formUpdate!: FormGroup;
   atualizar: boolean = false;
 
-  constructor(private fb: FormBuilder, private clienteService: ClienteService) {
+  constructor(private fb: FormBuilder, private clienteService: ClienteService) { }
 
-    this.form = this.fb.group({
-      id: [""],
+  ngOnInit(): void {
+    this.formAdd = this.fb.group({
       nome: ["", [Validators.required, Validators.maxLength(80)]],
-      cpf: ["", [Validators.required, Validators.minLength(14)]] // 14 = 11 dígitos + máscara
+      cpf: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14)]]
+    });
+
+    this.formUpdate = this.fb.group({
+      id: ["", [Validators.required,Validators.minLength(36), Validators.maxLength(36)]],
+      nome: ["", [Validators.required, Validators.maxLength(80)]],
+      cpf: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14)]]
+    });
+     console.log("ngOnInit funcionando");
+  }
+
+
+  //add cliente 
+  clienteAdicionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
+
+  addClienteAsync():void {
+    console.log("Chamou add");
+    if (this.formAdd.invalid) {
+      this.formAdd.markAllAsTouched();//mostra os erros 
+      return; //se form retornar alse ele interrompe 
+    }
+
+    const dto: ClienteDto = this.formAdd.value;
+    console.log("DTO enviado:", dto);
+
+    this.clienteService.addClienteAsync(dto).subscribe({
+      next: dados => {
+        this.clienteAdicionado = dados
+        console.log("cliente adicionado"+dados)
+        this.formAdd.reset();//limpa o formulario
+      },
+      error: er => console.error(er+"Erro ao adicionar cliente")
     })
   }
 
-  setUpdateMode() {
-    this.atualizar = true;
-    this.form.setValue({
-      id: '123',
-      nome: 'João Silva',
-      cpf: '123.456.789-00', // já com máscara
+  ClienteidUpdate !: string
+  clienteAtualizado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
+
+  updateClienteAsync() {
+
+    if (this.formUpdate.invalid) {
+      this.formUpdate.markAllAsTouched();
+      return;
+    }
+
+    const dto: ClienteDto = this.formUpdate.value;
+
+    this.clienteService.updateClienteAsync(this.ClienteidUpdate, dto).subscribe({
+      next: dados => {
+        this.clienteAtualizado = dados;
+        console.log("cliente atualizado" + dados)
+         this.formAdd.reset();
+      }
     })
-  }
-
-  //metodo que ativa mensagem de erro caso ouver campos invalidos
-  validarFormulario(): boolean {
-
-    //se nao estiver preenchido e dentro dos required da invalido e nao passa
-    if (this.form.invalid) {
-      // se for invalido faz o mark all retonar todas as mensagengens de erro nos campos
-      this.form.markAllAsTouched();
-      return false; //so pra sair
-    }
-
-    // verifica se e pra atualizar ou adicionar
-    if (this.atualizar) {
-      console.log('Atualizando:', this.form.value);//mostra no console os valore do form
-    }
-    else {
-      const { nome, cpf } = this.form.value;//pega so os dados de nome e cpf
-      console.log('Adicionando:', { nome, cpf });//mostra no console os valore do form
-    }
-
-    this.form.reset();
-    this.atualizar = false;
-
-    return true;
   }
 
   getAllClientesAsync() {
@@ -91,45 +110,6 @@ export class TestesComponent {
       }
     })
   }
-
-  //add cliente 
-  clienteAdicionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
-
-  //update talves nao precise
-  ClienteidUpdate !: string
-  clienteAtualizado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
-
-  FormClienteAsync() {
-
-    if (!this.validarFormulario()) {
-      return; //se form retornar false ele interrompe 
-    }
-
-    const Clientedto: ClienteDto = this.form.value;
-
-    if (this.atualizar) {
-        this.clienteService.updateClienteAsync(this.ClienteidUpdate, Clientedto).subscribe({
-          next: dados => {
-            this.clienteAtualizado = dados;
-            console.log(dados)
-          }
-        })
-    }
-    else {
-
-
-      this.clienteService.addClienteAsync(Clientedto).subscribe({
-        next: dados => {
-          this.clienteAdicionado = dados
-          console.log(dados)
-        },
-        error: er => console.error(er)
-      })
-    }
-
-    this.form.reset();
-  }
-
 
   deleteClienteAsync() {
     this.clienteService.deleteClienteAsync(this.clienteIdDelete).subscribe({
