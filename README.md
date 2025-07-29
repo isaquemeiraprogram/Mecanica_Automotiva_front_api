@@ -1,9 +1,8 @@
-###comandos pra instalar
+# Mecanica Automotiva front
+
+### comandos pra instalar
 npm i baixar node modules botar mascara pr enviar dados no formato certo
 npm install ngx-mask@16 --save
-
-
-# Mecanica Automotiva front
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
 
