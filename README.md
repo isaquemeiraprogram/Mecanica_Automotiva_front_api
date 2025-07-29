@@ -1,6 +1,7 @@
+###comandos pra instalar
 npm i baixar node modules botar mascara pr enviar dados no formato certo
+npm install ngx-mask@16 --save
 
-npm install --save ngx-mask@16.4.1
 
 # Mecanica Automotiva front
 
