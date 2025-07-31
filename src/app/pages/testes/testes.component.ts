@@ -36,19 +36,19 @@ export class TestesComponent implements OnInit {
     });
 
     this.formUpdate = this.fb.group({
-      id: ["", [Validators.required,Validators.minLength(36), Validators.maxLength(36)]],
+      id: ["", [Validators.required, Validators.minLength(36), Validators.maxLength(36)]],
       nome: ["", [Validators.required, Validators.maxLength(80)]],
       cpf: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14)]]
     });
-     console.log("ngOnInit funcionando");
+    console.log("ngOnInit funcionando");
   }
 
 
   //add cliente 
   clienteAdicionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
 
-  addClienteAsync():void {
-    console.log("Chamou add");
+  addCliente() {
+
     if (this.formAdd.invalid) {
       this.formAdd.markAllAsTouched();//mostra os erros 
       return; //se form retornar alse ele interrompe 
@@ -60,14 +60,13 @@ export class TestesComponent implements OnInit {
     this.clienteService.addClienteAsync(dto).subscribe({
       next: dados => {
         this.clienteAdicionado = dados
-        console.log("cliente adicionado"+dados)
+        console.log("cliente adicionado" + dados)
         this.formAdd.reset();//limpa o formulario
       },
-      error: er => console.error(er+"Erro ao adicionar cliente")
+      error: er => console.error(er + "Erro ao adicionar cliente")
     })
   }
 
-  ClienteidUpdate !: string
   clienteAtualizado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
 
   updateClienteAsync() {
@@ -77,13 +76,14 @@ export class TestesComponent implements OnInit {
       return;
     }
 
-    const dto: ClienteDto = this.formUpdate.value;
+    const { nome, cpf,id } = this.formUpdate.value;
+    const dto: ClienteDto = { nome, cpf }
 
-    this.clienteService.updateClienteAsync(this.ClienteidUpdate, dto).subscribe({
+    this.clienteService.updateClienteAsync(id, dto).subscribe({
       next: dados => {
         this.clienteAtualizado = dados;
         console.log("cliente atualizado" + dados)
-         this.formAdd.reset();
+        this.formAdd.reset();
       }
     })
   }

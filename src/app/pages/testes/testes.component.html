@@ -1,6 +1,6 @@
 <div class="container">
 
-    <!-- nome com maximo de 80 caracteres -->
+    <!-- obter cliente -->
     <div class="obterTodosClientes">
 
         <button (click)="getAllClientesAsync()">Obter Todos Clientes</button>
@@ -25,70 +25,84 @@
         </div>
     </div>
 
+    <!-- add cliente -->
     <div class="adicionarcliente">
 
-        <form [formGroup]="formAdd" (ngSubmit)="addClienteAsync()">
+        <form [formGroup]="formAdd" (ngSubmit)="addCliente()">
 
             <input type="text" formControlName="nome" placeholder="Nome">
             <div *ngIf="formAdd.get('nome')?.invalid && formAdd.get('nome')?.touched">
                 <small *ngIf="formAdd.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
+                <!-- minlenght em validator sempre minusculo no html pq e resultado -->
                 <small *ngIf="formAdd.get('nome')?.errors?.['maxlength']">Máximo 80 caracteres.</small>
             </div>
 
-            <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
+            <!-- [dropSpecialCharacters] faz salvar nesse formato nao so exibir para o user neste formato -->
+            <input type="text" formControlName="cpf" mask="000.000.000-00" [dropSpecialCharacters]="false"
+                placeholder="CPF">
             <div *ngIf="formAdd.get('cpf')?.invalid && formAdd.get('cpf')?.touched">
                 <p *ngIf="formAdd.get('cpf')?.errors?.['required']">CPF é obrigatório</p>
-                <p *ngIf="formAdd.get('cpf')?.errors?.['minLength']">CPF deve ter 11 números</p>
-                <p *ngIf="formAdd.get('cpf')?.errors?.['maxLength']">CPF deve ter 11 números</p>
+                <p *ngIf="formAdd.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</p>
+                <p *ngIf="formAdd.get('cpf')?.errors?.['maxlength']">CPF deve ter 11 números</p>
             </div>
 
             <button type="submit">Adicionar</button>
 
         </form>
+
+        <div class="clienteAdd" *ngIf="clienteAdicionado">
+            <p>Nome: {{clienteAdicionado.nome}}</p>
+            <p>CPF: {{clienteAdicionado.cpf}}</p>
+        </div>
     </div>
 
-    <div class="clienteAdd" *ngIf="clienteAdicionado">
-        <p>Nome: {{clienteAdicionado.nome}}</p>
-        <p>CPF: {{clienteAdicionado.cpf}}</p>
-    </div>
 
+    <!-- atualizar clienet -->
     <div class="atualizarCliente">
         <form [formGroup]="formUpdate" (submit)="updateClienteAsync()">
 
             <input type="text" formControlName="id" placeholder="Id do Usuário">
             <div *ngIf="formUpdate.get('id')?.invalid && formUpdate.get('nome')?.touched">
                 <p *ngIf="formUpdate.get('id')?.errors?.['required']">Id obrigatório</p>
-                <p *ngIf=" formUpdate.get('id')?.errors?.['minLength']">Id deve ter 36 caracteres</p>
+                <p *ngIf=" formUpdate.get('id')?.errors?.['minlength']">Id deve ter 36 caracteres</p>
                 <p *ngIf=" formUpdate.get('id')?.errors?.['maxlength']">Id deve ter 36 caracteres</p>
             </div>
 
+            <!-- Nome -->
             <input type="text" formControlName="nome" placeholder="Nome">
-            <div *ngIf="formUpdate.get('nome')?.invalid && formUpdate.get('nome')?.touched">
-                <small *ngIf="formUpdate.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
-                <small *ngIf="formUpdate.get('nome')?.errors?.['maxlength']">Máximo 80 caracteres.</small>
+            <div *ngIf="formAdd.get('nome')?.invalid && formAdd.get('nome')?.touched">
+                <small *ngIf="formAdd.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
+                <!-- minlenght em validator sempre minusculo no html pq e resultado -->
+                <small *ngIf="formAdd.get('nome')?.errors?.['maxlength']">Máximo 80 caracteres.</small>
             </div>
 
-            <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
-            <div *ngIf="formUpdate.get('cpf')?.invalid && formUpdate.get('nome')?.touched">
-                <p *ngIf="formUpdate.get('cpf')?.errors?.['required']">CPF é obrigatório</p>
-                <p *ngIf="formUpdate.get('cpf')?.errors?.['minLength']">CPF deve ter 11 números</p>
-                <p *ngIf="formUpdate.get('cpf')?.errors?.['maxlength']">CPF deve ter 11 números</p>
+            <!-- CPF -->
+            <input type="text" formControlName="cpf" mask="000.000.000-00" [dropSpecialCharacters]="false"
+                placeholder="CPF">
+            <div *ngIf="formAdd.get('cpf')?.invalid && formAdd.get('cpf')?.touched">
+                <p *ngIf="formAdd.get('cpf')?.errors?.['required']">CPF é obrigatório</p>
+                <p *ngIf="formAdd.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</p>
+                <p *ngIf="formAdd.get('cpf')?.errors?.['maxlength']">CPF deve ter 11 números</p>
             </div>
 
             <button type="submit">Atualizar</button>
 
         </form>
-    </div>
 
-    <div class="clienteup" *ngIf="clienteAtualizado">
+        <div class="clienteup" *ngIf="clienteAtualizado">
             <p>Nome: {{clienteAtualizado.nome}}</p>
             <p>CPF: {{clienteAtualizado.cpf}}</p>
         </div>
 
+    </div>
+
+
+    <!-- deletar cliente -->
     <div class="deletarcliente">
         <input type="text" [(ngModel)]="clienteIdDelete" placeholder="informe o id do cliente a remover">
         <button (click)="deleteClienteAsync()">Excluir cliente</button>
         <p *ngIf="clienteDeletado">{{clienteDeletado}}</p>
     </div>
 
+    <!-- busca deletar e atualizar por cpf -->
 </div>
