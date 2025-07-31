@@ -30,7 +30,7 @@
 
         <form [formGroup]="formAdd" (ngSubmit)="addCliente()">
 
-            <input type="text" formControlName="nome" placeholder="Nome">
+            <input type="text" formControlName="nome"  placeholder="Nome">
             <div *ngIf="formAdd.get('nome')?.invalid && formAdd.get('nome')?.touched">
                 <small *ngIf="formAdd.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
                 <!-- minlenght em validator sempre minusculo no html pq e resultado -->
@@ -38,8 +38,7 @@
             </div>
 
             <!-- [dropSpecialCharacters] faz salvar nesse formato nao so exibir para o user neste formato -->
-            <input type="text" formControlName="cpf" mask="000.000.000-00" [dropSpecialCharacters]="false"
-                placeholder="CPF">
+            <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
             <div *ngIf="formAdd.get('cpf')?.invalid && formAdd.get('cpf')?.touched">
                 <p *ngIf="formAdd.get('cpf')?.errors?.['required']">CPF é obrigatório</p>
                 <p *ngIf="formAdd.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</p>
@@ -77,8 +76,7 @@
             </div>
 
             <!-- CPF -->
-            <input type="text" formControlName="cpf" mask="000.000.000-00" [dropSpecialCharacters]="false"
-                placeholder="CPF">
+            <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
             <div *ngIf="formAdd.get('cpf')?.invalid && formAdd.get('cpf')?.touched">
                 <p *ngIf="formAdd.get('cpf')?.errors?.['required']">CPF é obrigatório</p>
                 <p *ngIf="formAdd.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</p>

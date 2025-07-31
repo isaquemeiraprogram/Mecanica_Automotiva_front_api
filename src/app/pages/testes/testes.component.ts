@@ -32,13 +32,13 @@ export class TestesComponent implements OnInit {
   ngOnInit(): void {
     this.formAdd = this.fb.group({
       nome: ["", [Validators.required, Validators.maxLength(80)]],
-      cpf: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14)]]
+      cpf: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
     });
 
     this.formUpdate = this.fb.group({
       id: ["", [Validators.required, Validators.minLength(36), Validators.maxLength(36)]],
       nome: ["", [Validators.required, Validators.maxLength(80)]],
-      cpf: ["", [Validators.required, Validators.minLength(14), Validators.maxLength(14)]]
+      cpf: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
     });
     console.log("ngOnInit funcionando");
   }
