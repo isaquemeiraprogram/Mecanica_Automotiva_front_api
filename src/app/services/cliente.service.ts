@@ -15,20 +15,20 @@ export class ClienteService {
     return this.http.get<Cliente[]>(this.link)
   }
 
-  getByIdClienteAsync(id: string): Observable<Cliente> {
-    return this.http.get<Cliente>(this.link + "/" + id)
+  getByCpfClienteAsync(cpf: string): Observable<Cliente> {
+    return this.http.get<Cliente>(this.link + "/cpf/" + cpf)
   }
 
   addClienteAsync(dto: ClienteDto): Observable<Cliente> {
     return this.http.post<Cliente>(this.link, dto)
   }
 
-  updateClienteAsync(id: string, dto: ClienteDto): Observable<Cliente> {
-    return this.http.put<Cliente>(this.link + "/" + id, dto)
+  updateClienteAsync(cpf: string, dto: ClienteDto): Observable<Cliente> {
+    return this.http.put<Cliente>(this.link + "/cpf/" + cpf, dto)
   }
 
-  deleteClienteAsync(id: string): Observable<string> {
-    return this.http.delete<string>(this.link + "/" + id)
+  deleteClienteAsync(cpf: string): Observable<string> {
+    return this.http.delete<string>(this.link + "/cpf/" + cpf)
   }
 
 }

@@ -15,6 +15,7 @@ import { TestesComponent } from './pages/testes/testes.component';
 import { AppComponentComponent } from './app.component/app.component.component';
 import { AppcomponentComponent } from './appcomponent/appcomponent.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { CpfFormatPipe } from './pipes/cpf-format.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     AgendarComponent,
     TestesComponent,
     AppComponentComponent,
-    AppcomponentComponent
+    AppcomponentComponent,
+    CpfFormatPipe,
   ],
   imports: [
     BrowserModule,

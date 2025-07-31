@@ -11,43 +11,32 @@ import { ClienteService } from 'src/app/services/cliente.service';
 })
 export class TestesComponent implements OnInit {
 
-  //obter todos clientes
-  clientList: Cliente[] = [];
-
-  //achar cliente
-  clienteIdget!: string;
-  clienteSelecionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
-
-  //deletar cliente
-  clienteIdDelete!: string;
-  clienteDeletado!: string
-
   //formulario
   formAdd!: FormGroup;
   formUpdate!: FormGroup;
-  atualizar: boolean = false;
 
   constructor(private fb: FormBuilder, private clienteService: ClienteService) { }
 
   ngOnInit(): void {
+
     this.formAdd = this.fb.group({
       nome: ["", [Validators.required, Validators.maxLength(80)]],
       cpf: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
     });
 
     this.formUpdate = this.fb.group({
-      id: ["", [Validators.required, Validators.minLength(36), Validators.maxLength(36)]],
+      cpfAntigo: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
       nome: ["", [Validators.required, Validators.maxLength(80)]],
       cpf: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
     });
-    console.log("ngOnInit funcionando");
+
   }
 
 
   //add cliente 
   clienteAdicionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
 
-  addCliente() {
+  addClienteAsync() {
 
     if (this.formAdd.invalid) {
       this.formAdd.markAllAsTouched();//mostra os erros 
@@ -55,18 +44,19 @@ export class TestesComponent implements OnInit {
     }
 
     const dto: ClienteDto = this.formAdd.value;
-    console.log("DTO enviado:", dto);
 
     this.clienteService.addClienteAsync(dto).subscribe({
       next: dados => {
         this.clienteAdicionado = dados
-        console.log("cliente adicionado" + dados)
+        console.log("Cliente Adicionado" + dados)
         this.formAdd.reset();//limpa o formulario
       },
       error: er => console.error(er + "Erro ao adicionar cliente")
     })
   }
 
+
+  //AtualizarCliente
   clienteAtualizado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
 
   updateClienteAsync() {
@@ -75,11 +65,11 @@ export class TestesComponent implements OnInit {
       this.formUpdate.markAllAsTouched();
       return;
     }
-
-    const { nome, cpf,id } = this.formUpdate.value;
+    console.log("validado")
+    const { nome, cpf, cpfAntigo } = this.formUpdate.value;
     const dto: ClienteDto = { nome, cpf }
 
-    this.clienteService.updateClienteAsync(id, dto).subscribe({
+    this.clienteService.updateClienteAsync(cpfAntigo, dto).subscribe({
       next: dados => {
         this.clienteAtualizado = dados;
         console.log("cliente atualizado" + dados)
@@ -88,6 +78,8 @@ export class TestesComponent implements OnInit {
     })
   }
 
+  //obter todos clientes
+  clientList: Cliente[] = [];
   getAllClientesAsync() {
     this.clienteService.getAllClientesAsync().subscribe({
       next: dados => {
@@ -98,8 +90,12 @@ export class TestesComponent implements OnInit {
     })
   }
 
-  getClienteByIdAsync() {
-    this.clienteService.getByIdClienteAsync(this.clienteIdget).subscribe({
+  //achar cliente
+  clienteCpfget!: string;
+  clienteSelecionado: Cliente = { id: "", nome: "", cpf: "", endereco: [] }
+
+  getClienteByCpfAsync() {
+    this.clienteService.getByCpfClienteAsync(this.clienteCpfget).subscribe({
       next: dados => {
         this.clienteSelecionado = dados
         console.log(dados)
@@ -111,8 +107,13 @@ export class TestesComponent implements OnInit {
     })
   }
 
+
+  //deletar cliente
+  clienteCpfDelete!: string;
+  clienteDeletado!: string
+
   deleteClienteAsync() {
-    this.clienteService.deleteClienteAsync(this.clienteIdDelete).subscribe({
+    this.clienteService.deleteClienteAsync(this.clienteCpfDelete).subscribe({
       next: dados => {
         this.clienteDeletado = "Cliente Deletado Com Sucesso";
         console.log(dados)
