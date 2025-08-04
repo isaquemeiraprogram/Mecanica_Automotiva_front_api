@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+}
+
+.obterTodosClientes {
+    background-color: aqua;
+    width: 200px;
+    height: 200px;
+}
+
+.buscarCliente {
+    background-color: aqua;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+}
+
+.adicionarcliente {
+    background-color: aqua;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+}
+
+.atualizarCliente {
+    background-color: aqua;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+}
+
+.deletarcliente {
+    background-color: aqua;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.selecionarModo {
+    display: flex;
+    flex-direction: column;
+}
