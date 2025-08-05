@@ -9,7 +9,21 @@
             <li *ngFor="let cliente of clientList">
                 <p>Nome: {{cliente.nome}} </p>
                 <p>Cpf: {{cliente.cpf | cpfFormat}}</p>
-                <p>Endereco: {{cliente.endereco}}</p>
+
+                <div *ngIf="cliente.endereco.length > 0">
+                    <p>Endereco</p>
+                    <ul>
+                        <li *ngFor="let e of cliente.endereco">
+                            Cep:{{e.cep}},<br>
+                            Estado: {{e.estado}},<br>
+                            Cidade{{e.cidade}},<br>
+                            Rua:{{e.rua}},<br>
+                            Número{{e.numero}}<br><br>
+                        </li>
+                    </ul>
+                </div>
+
+
             </li>
         </ul>
     </div>
@@ -61,7 +75,8 @@
     <div class="atualizarCliente">
         <form [formGroup]="formUpdate" (submit)="updateClienteAsync()">
 
-            <input type="text" formControlName="cpfAntigo"  mask="000.000.000-00" placeholder="Informe o cpf do Usuário a atualizar">
+            <input type="text" formControlName="cpfAntigo" mask="000.000.000-00"
+                placeholder="Informe o cpf do Usuário a atualizar">
             <div *ngIf="formUpdate.get('cpfAntigo')?.invalid && formUpdate.get('nome')?.touched">
                 <p *ngIf="formUpdate.get('cpfAntigo')?.errors?.['required']">CPF obrigatório</p>
                 <p *ngIf=" formUpdate.get('cpfAntigo')?.errors?.['minlength']">CPF deve ter no minimo 11 caracteres</p>

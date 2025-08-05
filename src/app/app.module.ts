@@ -18,6 +18,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CpfFormatPipe } from './pipes/cpf-format.pipe';
 import { ClienteControllerComponent } from './controlers/cliente-controller/cliente-controller.component';
 import { EnderecoControllerComponent } from './controlers/endereco-controller/endereco-controller.component';
+import { ErroFormPipe } from './pipes/erro-form.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { EnderecoControllerComponent } from './controlers/endereco-controller/en
     CpfFormatPipe,
     ClienteControllerComponent,
     EnderecoControllerComponent,
+    ErroFormPipe
   ],
   imports: [
     BrowserModule,

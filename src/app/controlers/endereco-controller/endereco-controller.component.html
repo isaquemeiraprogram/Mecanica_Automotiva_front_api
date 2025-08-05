@@ -1,1 +1,70 @@
-<p>endereco-controller works!</p>
+<div class="container">
+
+    <!-- add -->
+    <div class="adicionar">
+        <form [formGroup]="formAdd" (ngSubmit)="AddEnderecoAsync()">
+
+            <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
+            <small *ngIf="formAdd| erroForm:'cep'as erro">{{erro}}</small>
+
+            <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
+            <small *ngIf="formAdd | erroForm:'estado'as erro">{{erro}}</small>
+            <!-- primeiro chama o parametro do pipe,depois o pipe depois os outros parametros de tiver -->
+            <!-- o 'as nome' guarda o valor retornado pela pipe em uma variável local -->
+
+            <input type="text" formControlName="cidade" placeholder="Cidade">
+            <small *ngIf="formAdd | erroForm:'cidade'as erro">{{erro}}</small>
+
+            <input type="text" formControlName="rua" placeholder="Rua">
+            <small *ngIf="formAdd|erroForm:'rua'as erro">{{erro}}</small>
+
+            <input type="text" formControlName="numero" placeholder="Número">
+            <small *ngIf="formAdd | erroForm:'numero' as erro">{{erro}}</small>
+
+            <input type="text" formControlName="clienteId" placeholder="clienteId">
+            <small *ngIf="formAdd |erroForm:'clienteId'as erro">{{erro}}</small>
+
+            <button type="submit">Adicionar</button>
+        </form>
+    </div>
+    
+    <!-- put -->
+    <div class="atualizar">
+        <form [formGroup]="formPut" (submit)="UpdateEnderecoAsync()">
+
+            <input type="text" formControlName="id" placeholder="informe o id do endereco">
+            <small *ngIf="formAdd | erroForm:'id' as erro">{{erro}}</small>
+
+            <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
+            <small *ngIf="formAdd | erroForm:'cep'as erro">{{erro}}</small>
+
+            <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
+            <small *ngIf="formAdd | erroForm:'estado'as erro">{{erro}}</small>
+
+            <input type="text" formControlName="cidade" placeholder="Cidade">
+            <small *ngIf="formAdd | erroForm:'cidade'as erro">{{erro}}</small>
+
+            <input type="text" formControlName="rua" placeholder="Rua">
+            <small *ngIf="formAdd | erroForm:'rua'as erro">{{erro}}</small>
+
+            <input type="text" formControlName="numero" placeholder="Número">
+            <small *ngIf="formAdd | erroForm:'numero' as erro">{{erro}}</small>
+
+            <input type="text" formControlName="clienteId" placeholder="clienteId">
+            <small *ngIf="formAdd | erroForm:'clienteId'as erro">{{erro}}</small>
+
+            <button type="submit">Atualizar</button>
+        </form>
+    </div>
+
+    <div class="deletar">
+        <!-- delete -->
+        <form [formGroup]="formDelete" (submit)="DeleteEnderecoAsync()">
+
+            <input type="text" formControlName="id" placeholder="informe o id do endereco" maxlength="36">
+            <small *ngIf="formAdd | erroForm:'id' as erro">{{erro}}</small>
+
+            <button type="submit">Deletar</button>
+        </form>
+    </div>
+</div>

@@ -3,6 +3,7 @@ export interface Endereco {
     cep: string,
     estado: string,
     cidade: string,
+    bairro:string,
     rua: string,
     numero: string,
     clienteId: string
@@ -13,6 +14,7 @@ export interface EnderecoDto {
     cep: string,
     estado: string,
     cidade: string,
+    bairro:string,
     rua: string,
     numero: string,
     clienteId: string
