@@ -6,7 +6,8 @@ export interface Endereco {
     bairro:string,
     rua: string,
     numero: string,
-    clienteId: string
+    complemento:string, // andar bloco aparatemento
+    clienteCpf: string
     //o que tem jsonIgore nao precisa
 }
 
@@ -17,6 +18,7 @@ export interface EnderecoDto {
     bairro:string,
     rua: string,
     numero: string,
-    clienteId: string
+    complemento:string,
+    clienteCpf: string
     //o que tem jsonIgore nao precisa
 }

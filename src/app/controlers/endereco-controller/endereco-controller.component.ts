@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Endereco, EnderecoDto } from 'src/app/models/endereco.model';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { EnderecoService } from 'src/app/services/endereco.service';
+import { ClienteControllerComponent } from '../cliente-controller/cliente-controller.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-endereco-controller',
@@ -33,7 +35,8 @@ export class EnderecoControllerComponent implements OnInit {
       bairro: ["", [Validators.required]],
       rua: ["", [Validators.required]],
       numero: ["", [Validators.required]],
-      clienteId: ["", [Validators.required]]
+      complemento:[""],
+      clienteCpf: ["", [Validators.required]]
 
     })
   }
@@ -48,7 +51,8 @@ export class EnderecoControllerComponent implements OnInit {
       bairro: ["", [Validators.required]],
       rua: ["", [Validators.required]],
       numero: ["", [Validators.required]],
-      clienteId: ["", [Validators.required]]
+      complemento: [""],
+      clienteCpf: ["", [Validators.required]]
 
     })
   }
@@ -60,41 +64,44 @@ export class EnderecoControllerComponent implements OnInit {
   }
 
   //add
-  addReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", clienteId: "" }
+  addReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "", clienteCpf: "" }
   AddEnderecoAsync() {
+    console.log("enderecoadd executado")
     if (this.formAdd.invalid) {
       this.formAdd.markAllAsTouched();
       return;
     }
 
-    const dto: EnderecoDto = { cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", clienteId: "" }
+    console.log("passou na verificao")
+    const dto: EnderecoDto = this.formAdd.value
 
+    console.log("o q esta sendo enviado", dto)
     return this._service.AddEnderecoAsync(dto).subscribe({
       next: dados => {
         this.addReturn = dados,
           console.log("Endereço adicionado" + dados)
       },
-      error: er => console.error("falha na requisicao de endereco" + er)
+      error: er => console.error("falha na requisicao de endereco", er)
     })
   }
 
-  //atualizar
-  updateReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", clienteId: "" }
+  // atualizar
+  updateReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "", clienteCpf: "" }
   UpdateEnderecoAsync() {
     if (this.formPut.invalid) {
       this.formPut.markAllAsTouched;
       return;
     }
 
-    const { id, cep, estado, cidade, bairro, rua, numero, clienteId } = this.formPut.value
-    const dto = { cep, estado, cidade, bairro, rua, numero, clienteId }
+    const { id, cep, estado, cidade, bairro, rua, numero, complemento, clienteCpf } = this.formPut.value
+    const dto = { cep, estado, cidade, bairro, rua, numero, complemento, clienteCpf }
 
     return this._service.UpdateEnderecoAsync(id, dto).subscribe({
       next: dados => {
         this.updateReturn = dados,
           console.log("Endereco Atualizado" + dados)
       },
-      error: er => console.error("falha na requisicao de endereco" + er)
+      error: er => console.error("falha na requisicao de endereco", er)
     })
   }
 
@@ -115,7 +122,7 @@ export class EnderecoControllerComponent implements OnInit {
         this.enderecoReturn = dados,
           console.log(dados + "endereco deletado com sucesso")
       },
-      error: er => console.error("erros ao deletar" + er)
+      error: er => console.error("erros ao deletar", er)
     })
   }
 }

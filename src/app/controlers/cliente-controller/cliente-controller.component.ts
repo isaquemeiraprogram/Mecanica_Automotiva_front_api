@@ -50,7 +50,7 @@ export class ClienteControllerComponent implements OnInit {
         console.log("Cliente Adicionado" + dados)
         this.formAdd.reset();//limpa o formulario
       },
-      error: er => console.error(er + "Erro ao adicionar cliente")
+      error: er => console.error("Erro ao adicionar cliente", er)
     })
   }
 
@@ -73,7 +73,8 @@ export class ClienteControllerComponent implements OnInit {
         this.clienteAtualizado = dados;
         console.log("cliente atualizado" + dados)
         this.formAdd.reset();
-      }
+      },
+      error: er => console.error("Erro ao atualizar cliente", er)
     })
   }
 

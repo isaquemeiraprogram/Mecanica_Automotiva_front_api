@@ -15,14 +15,19 @@
             <input type="text" formControlName="cidade" placeholder="Cidade">
             <small *ngIf="formAdd | erroForm:'cidade'as erro">{{erro}}</small>
 
+            <input type="text" formControlName="bairro" placeholder="bairro">
+            <small *ngIf="formAdd | erroForm:'bairro'as erro">{{erro}}</small>
+
             <input type="text" formControlName="rua" placeholder="Rua">
             <small *ngIf="formAdd|erroForm:'rua'as erro">{{erro}}</small>
 
             <input type="text" formControlName="numero" placeholder="Número">
             <small *ngIf="formAdd | erroForm:'numero' as erro">{{erro}}</small>
 
-            <input type="text" formControlName="clienteId" placeholder="clienteId">
-            <small *ngIf="formAdd |erroForm:'clienteId'as erro">{{erro}}</small>
+            <input type="text" formControlName="complemento" placeholder="complemento(andar,bloco apartamento)">
+
+            <input type="text" formControlName="clienteCpf" placeholder="cpf do cliente">
+            <small *ngIf="formAdd |erroForm:'clienteCpf'as erro">{{erro}}</small>
 
             <button type="submit">Adicionar</button>
         </form>
@@ -50,8 +55,8 @@
             <input type="text" formControlName="numero" placeholder="Número">
             <small *ngIf="formAdd | erroForm:'numero' as erro">{{erro}}</small>
 
-            <input type="text" formControlName="clienteId" placeholder="clienteId">
-            <small *ngIf="formAdd | erroForm:'clienteId'as erro">{{erro}}</small>
+            <input type="text" formControlName="clienteCpf" placeholder="cpf do cliente">
+            <small *ngIf="formAdd | erroForm:'clienteCpf'as erro">{{erro}}</small>
 
             <button type="submit">Atualizar</button>
         </form>
