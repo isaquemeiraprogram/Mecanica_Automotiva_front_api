@@ -15,10 +15,9 @@ import { TestesComponent } from './pages/testes/testes.component';
 import { AppComponentComponent } from './app.component/app.component.component';
 import { AppcomponentComponent } from './appcomponent/appcomponent.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { CpfFormatPipe } from './pipes/cpf-format.pipe';
 import { ClienteControllerComponent } from './controlers/cliente-controller/cliente-controller.component';
 import { EnderecoControllerComponent } from './controlers/endereco-controller/endereco-controller.component';
-import { ErroFormPipe } from './pipes/erro-form.pipe';
+import { CpfMaskPipe } from './pipes/cpf-mask.pipe';
 
 @NgModule({
   declarations: [
@@ -31,10 +30,9 @@ import { ErroFormPipe } from './pipes/erro-form.pipe';
     TestesComponent,
     AppComponentComponent,
     AppcomponentComponent,
-    CpfFormatPipe,
     ClienteControllerComponent,
     EnderecoControllerComponent,
-    ErroFormPipe
+    CpfMaskPipe
   ],
   imports: [
     BrowserModule,

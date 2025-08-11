@@ -2,72 +2,112 @@
 
     <!-- add -->
     <div class="adicionar">
-        <form [formGroup]="formAdd" (ngSubmit)="AddEnderecoAsync()">
+        <!-- sempre verifique se o form ja foi criado antes de usar o pipe senao da erro o pipe executa e nao acha nada -->
+        <form *ngIf="formAdd" [formGroup]="formAdd" (ngSubmit)="AddEnderecoAsync()">
 
-            <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
-            <small *ngIf="formAdd| erroForm:'cep'as erro">{{erro}}</small>
-
-            <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
-            <small *ngIf="formAdd | erroForm:'estado'as erro">{{erro}}</small>
             <!-- primeiro chama o parametro do pipe,depois o pipe depois os outros parametros de tiver -->
             <!-- o 'as nome' guarda o valor retornado pela pipe em uma variável local -->
+            <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
+            <div *ngIf="formAdd.get('cep')?.invalid && formAdd.get('cep')?.touched">
+                <small *ngIf="formAdd.get('cep')?.errors?.['required']">Campo Obrigatorio</small>
+                <small *ngIf="formAdd.get('cep')?.errors?.['minlength']">campo incompleto</small>
+            </div>
+
+            <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
+            <div *ngIf="formAdd.get('estado')?.invalid && formAdd.get('estado')?.touched">
+                <small *ngIf="formAdd.get('estado')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="cidade" placeholder="Cidade">
-            <small *ngIf="formAdd | erroForm:'cidade'as erro">{{erro}}</small>
+            <div *ngIf="formAdd.get('cidade')?.invalid && formAdd.get('cidade')?.touched">
+                <small *ngIf="formAdd.get('cidade')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="bairro" placeholder="bairro">
-            <small *ngIf="formAdd | erroForm:'bairro'as erro">{{erro}}</small>
+            <div *ngIf="formAdd.get('bairro')?.invalid && formAdd.get('bairro')?.touched">
+                <small *ngIf="formAdd.get('bairro')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="rua" placeholder="Rua">
-            <small *ngIf="formAdd|erroForm:'rua'as erro">{{erro}}</small>
+            <div *ngIf="formAdd.get('rua')?.invalid && formAdd.get('rua')?.touched">
+                <small *ngIf="formAdd.get('rua')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="numero" placeholder="Número">
-            <small *ngIf="formAdd | erroForm:'numero' as erro">{{erro}}</small>
+            <div *ngIf="formAdd.get('numero')?.invalid && formAdd.get('numero')?.touched">
+                <small *ngIf="formAdd.get('numero')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="complemento" placeholder="complemento(andar,bloco apartamento)">
 
-            <input type="text" formControlName="clienteCpf" placeholder="cpf do cliente">
-            <small *ngIf="formAdd |erroForm:'clienteCpf'as erro">{{erro}}</small>
-
+            <input type="text" formControlName="clienteCpf" mask="000.000.000-00" placeholder="cpf do cliente">
+            <div *ngIf="formAdd.get('clienteCpf')?.invalid && formAdd.get('clienteCpf')?.touched">
+                <small *ngIf="formAdd.get('clienteCpf')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
             <button type="submit">Adicionar</button>
         </form>
     </div>
-    
+
     <!-- put -->
     <div class="atualizar">
-        <form [formGroup]="formPut" (submit)="UpdateEnderecoAsync()">
+        <form *ngIf="formPut" [formGroup]="formPut" (submit)="UpdateEnderecoAsync()">
 
             <input type="text" formControlName="id" placeholder="informe o id do endereco">
-            <small *ngIf="formAdd | erroForm:'id' as erro">{{erro}}</small>
+            <div *ngIf="formPut.get('id')?.invalid && formPut.get('id')?.touched">
+                <small *ngIf="formPut.get('id')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
-            <small *ngIf="formAdd | erroForm:'cep'as erro">{{erro}}</small>
+            <div *ngIf="formPut.get('cep')?.invalid && formPut.get('cep')?.touched">
+                <small *ngIf="formPut.get('cep')?.errors?.['required'] ">Campo Obrigatorio</small>
+                <small *ngIf="formPut.get('cep')?.errors?.['minlength']">campo incompleto</small>
+            </div>
 
             <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
-            <small *ngIf="formAdd | erroForm:'estado'as erro">{{erro}}</small>
+            <div *ngIf="formPut.get('estado')?.invalid && formPut.get('estado')?.touched">
+                <small *ngIf="formPut.get('estado')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="cidade" placeholder="Cidade">
-            <small *ngIf="formAdd | erroForm:'cidade'as erro">{{erro}}</small>
+            <div *ngIf="formPut.get('cidade')?.invalid && formPut.get('cidade')?.touched">
+                <small *ngIf="formPut.get('cidade')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
+
+            <input type="text" formControlName="bairro" placeholder="bairro">
+            <div *ngIf="formPut.get('bairro')?.invalid && formPut.get('bairro')?.touched">
+                <small *ngIf="formPut.get('bairro')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="rua" placeholder="Rua">
-            <small *ngIf="formAdd | erroForm:'rua'as erro">{{erro}}</small>
+            <div *ngIf="formPut.get('rua')?.invalid && formPut.get('rua')?.touched">
+                <small *ngIf="formPut.get('rua')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <input type="text" formControlName="numero" placeholder="Número">
-            <small *ngIf="formAdd | erroForm:'numero' as erro">{{erro}}</small>
+            <div *ngIf="formPut.get('numero')?.invalid && formPut.get('numero')?.touched">
+                <small *ngIf="formPut.get('numero')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
-            <input type="text" formControlName="clienteCpf" placeholder="cpf do cliente">
-            <small *ngIf="formAdd | erroForm:'clienteCpf'as erro">{{erro}}</small>
+            <input type="text" formControlName="complemento" placeholder="complemento(andar,bloco apartamento)">
+
+            <input type="text" formControlName="clienteCpf" mask="000.000.000-00" placeholder="cpf do cliente">
+            <div *ngIf="formPut.get('clienteCpf')?.invalid && formPut.get('clienteCpf')?.touched">
+                <small *ngIf="formPut.get('clienteCpf')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <button type="submit">Atualizar</button>
         </form>
     </div>
 
+    <!-- delete -->
     <div class="deletar">
         <!-- delete -->
-        <form [formGroup]="formDelete" (submit)="DeleteEnderecoAsync()">
+        <form *ngIf="formDelete" [formGroup]="formDelete" (submit)="DeleteEnderecoAsync()">
 
             <input type="text" formControlName="id" placeholder="informe o id do endereco" maxlength="36">
-            <small *ngIf="formAdd | erroForm:'id' as erro">{{erro}}</small>
+            <div *ngIf="formDelete.get('id')?.invalid && formDelete.get('id')?.touched">
+                <small *ngIf="formDelete.get('id')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
 
             <button type="submit">Deletar</button>
         </form>

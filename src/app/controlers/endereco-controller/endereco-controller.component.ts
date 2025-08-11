@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Endereco, EnderecoDto } from 'src/app/models/endereco.model';
-import { ClienteService } from 'src/app/services/cliente.service';
 import { EnderecoService } from 'src/app/services/endereco.service';
-import { ClienteControllerComponent } from '../cliente-controller/cliente-controller.component';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-endereco-controller',
@@ -17,25 +14,28 @@ export class EnderecoControllerComponent implements OnInit {
   formPut!: FormGroup;
   formDelete!: FormGroup;
 
-  constructor(private fb: FormBuilder, private _service: EnderecoService) { }
+  constructor(private fb: FormBuilder, private _enderecoService: EnderecoService) { }
 
   ngOnInit(): void {
     this.GerarFormAdd();
     this.GerarFormPut();
     this.GerarFormDelete();
   }
+  //sempre usa {} pra manusear objetos
 
 
   GerarFormAdd(): void {
     this.formAdd = this.fb.group({
 
-      cep: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+
+      // , Validators.minLength(8), Validators.maxLength(8) do cep
+      cep: ["", [Validators.required,Validators.minLength(8)]],
       estado: ["", [Validators.required]],
       cidade: ["", [Validators.required]],
       bairro: ["", [Validators.required]],
       rua: ["", [Validators.required]],
       numero: ["", [Validators.required]],
-      complemento:[""],
+      complemento: [""],
       clienteCpf: ["", [Validators.required]]
 
     })
@@ -66,17 +66,16 @@ export class EnderecoControllerComponent implements OnInit {
   //add
   addReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "", clienteCpf: "" }
   AddEnderecoAsync() {
-    console.log("enderecoadd executado")
+    console.log("add endereco chamado")
     if (this.formAdd.invalid) {
       this.formAdd.markAllAsTouched();
       return;
     }
-
-    console.log("passou na verificao")
+    console.log("add endereco passou na validacao")
     const dto: EnderecoDto = this.formAdd.value
 
     console.log("o q esta sendo enviado", dto)
-    return this._service.AddEnderecoAsync(dto).subscribe({
+    return this._enderecoService.AddEnderecoAsync(dto).subscribe({
       next: dados => {
         this.addReturn = dados,
           console.log("Endereço adicionado" + dados)
@@ -88,15 +87,17 @@ export class EnderecoControllerComponent implements OnInit {
   // atualizar
   updateReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "", clienteCpf: "" }
   UpdateEnderecoAsync() {
+    console.log(" update iniciado")
     if (this.formPut.invalid) {
-      this.formPut.markAllAsTouched;
+      this.formPut.markAllAsTouched();
       return;
     }
+    console.log(" validacao iniciado")
 
     const { id, cep, estado, cidade, bairro, rua, numero, complemento, clienteCpf } = this.formPut.value
     const dto = { cep, estado, cidade, bairro, rua, numero, complemento, clienteCpf }
 
-    return this._service.UpdateEnderecoAsync(id, dto).subscribe({
+    return this._enderecoService.UpdateEnderecoAsync(id, dto).subscribe({
       next: dados => {
         this.updateReturn = dados,
           console.log("Endereco Atualizado" + dados)
@@ -108,8 +109,8 @@ export class EnderecoControllerComponent implements OnInit {
 
   enderecoReturn!: boolean
   DeleteEnderecoAsync() {
-    if (this.formPut.invalid) {
-      this.formPut.markAllAsTouched;
+    if (this.formDelete.invalid) {
+      this.formDelete.markAllAsTouched();
       return;
     }
     //nao faca isso o form sempre retorna um objeto e nao string
@@ -117,7 +118,7 @@ export class EnderecoControllerComponent implements OnInit {
     //faca assim pra pegar so a string e nao o objeto
     const id = this.formDelete.get("id")?.value;
 
-    return this._service.DeleteEnderecoAsync(id).subscribe({
+    return this._enderecoService.DeleteEnderecoAsync(id).subscribe({
       next: dados => {
         this.enderecoReturn = dados,
           console.log(dados + "endereco deletado com sucesso")

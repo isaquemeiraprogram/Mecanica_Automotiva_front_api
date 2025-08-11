@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'cpfFormat'
+  name: 'cpfMask'
 })
-export class CpfFormatPipe implements PipeTransform {
+export class CpfMaskPipe implements PipeTransform {
 
   transform(value: string): string {
     //recebe o cpf

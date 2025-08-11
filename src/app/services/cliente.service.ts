@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Cliente, ClienteDto } from '../models/cliente.model';
 
 @Injectable({
@@ -30,6 +30,5 @@ export class ClienteService {
   deleteClienteAsync(cpf: string): Observable<string> {
     return this.http.delete<string>(this.link + "/cpf/" + cpf)
   }
-
 }
-// npx ng g service services/cliente gera um service
+  // npx ng g service services/cliente gera um service

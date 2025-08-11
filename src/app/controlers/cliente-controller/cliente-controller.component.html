@@ -5,24 +5,24 @@
 
         <button (click)="getAllClientesAsync()">Obter Todos Clientes</button>
 
-        <ul *ngIf="clientList">
-            <li *ngFor="let cliente of clientList">
+        <ul class="clienteListgetall" *ngIf="clientList">
+            <li *ngFor="let cliente of clientList" class="clienteDList">
+
                 <p>Nome: {{cliente.nome}} </p>
-                <p>Cpf: {{cliente.cpf | cpfFormat}}</p>
+                <p>Cpf: {{cliente.cpf | cpfMask}}</p>
 
                 <div *ngIf="cliente.endereco.length > 0">
                     <p>Endereco</p>
-                    <ul>
+                    <ul class="enderecoDecliente">
                         <li *ngFor="let e of cliente.endereco">
-                            Cep:{{e.cep}},<br>
+                            Cep: {{e.cep}},<br>
                             Estado: {{e.estado}},<br>
-                            Cidade{{e.cidade}},<br>
-                            Rua:{{e.rua}},<br>
-                            Número{{e.numero}}<br><br>
+                            Cidade: {{e.cidade}},<br>
+                            Rua: {{e.rua}},<br>
+                            Número: {{e.numero}}<br><br>
                         </li>
                     </ul>
                 </div>
-
 
             </li>
         </ul>
@@ -35,8 +35,19 @@
 
         <div class="clienteId" *ngIf="clienteSelecionado.id">
             <p>Nome: {{clienteSelecionado.nome}}</p>
-            <p>Cpf: {{clienteSelecionado.cpf}}</p>
-            <p>Endereco: {{clienteSelecionado.endereco}}</p>
+            <p>Cpf: {{clienteSelecionado.cpf | cpfMask}}</p>
+            <div *ngIf="clienteSelecionado.endereco.length > 0">
+                <p>Endereco</p>
+                <ul>
+                    <li *ngFor="let e of clienteSelecionado.endereco">
+                        Cep:{{e.cep}},<br>
+                        Estado: {{e.estado}},<br>
+                        Cidade{{e.cidade}},<br>
+                        Rua:{{e.rua}},<br>
+                        Número{{e.numero}}<br><br>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -46,6 +57,7 @@
         <form [formGroup]="formAdd" (ngSubmit)="addClienteAsync()">
 
             <input type="text" formControlName="nome" placeholder="Nome">
+            <small></small>
             <div *ngIf="formAdd.get('nome')?.invalid && formAdd.get('nome')?.touched">
                 <small *ngIf="formAdd.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
                 <!-- minlenght em validator sempre minusculo no html pq e resultado -->
