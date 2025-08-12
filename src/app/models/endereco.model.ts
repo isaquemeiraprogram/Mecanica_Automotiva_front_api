@@ -7,7 +7,6 @@ export interface Endereco {
     rua: string,
     numero: string,
     complemento:string, // andar bloco aparatemento
-    clienteCpf: string
     //o que tem jsonIgore nao precisa
 }
 

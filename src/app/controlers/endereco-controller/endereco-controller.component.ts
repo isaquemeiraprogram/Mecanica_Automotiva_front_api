@@ -64,7 +64,7 @@ export class EnderecoControllerComponent implements OnInit {
   }
 
   //add
-  addReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "", clienteCpf: "" }
+  addReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "" }
   AddEnderecoAsync() {
     console.log("add endereco chamado")
     if (this.formAdd.invalid) {
@@ -85,7 +85,7 @@ export class EnderecoControllerComponent implements OnInit {
   }
 
   // atualizar
-  updateReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "", clienteCpf: "" }
+  updateReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "" }
   UpdateEnderecoAsync() {
     console.log(" update iniciado")
     if (this.formPut.invalid) {
