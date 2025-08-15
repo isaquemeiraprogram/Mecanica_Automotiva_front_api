@@ -7,47 +7,29 @@
 
         <ul class="clienteListgetall" *ngIf="clientList">
             <li *ngFor="let cliente of clientList" class="clienteDList">
-
                 <p>Nome: {{cliente.nome}} </p>
                 <p>Cpf: {{cliente.cpf | cpfMask}}</p>
-
-                <div *ngIf="cliente.endereco.length > 0">
-                    <p>Endereco</p>
-                    <ul class="enderecoDecliente">
-                        <li *ngFor="let e of cliente.endereco">
-                            Cep: {{e.cep}},<br>
-                            Estado: {{e.estado}},<br>
-                            Cidade: {{e.cidade}},<br>
-                            Rua: {{e.rua}},<br>
-                            Número: {{e.numero}}<br><br>
-                        </li>
-                    </ul>
-                </div>
-
             </li>
         </ul>
+
     </div>
 
     <!-- obter cliente -->
     <div class="buscarCliente">
-        <input type="text" [(ngModel)]="clienteCpfget" mask="000.000.000-00" placeholder="Digite o CPF do cliente">
-        <button (click)="getClienteByCpfAsync()">Achar cliente</button>
+
+        <form [formGroup]="formGetCpf" (submit)="getClienteByCpfAsync()">
+
+            <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="Informe o Cpf da Busca">
+            <div *ngIf="formGetCpf.get('cpf')?.touched">
+                <small *ngFor="let erro of filtrarErro(formGetCpf.get('cpf')!)">{{ erro }}</small>
+            </div>
+
+            <button type="submit">Buscar</button>
+        </form>
 
         <div class="clienteId" *ngIf="clienteSelecionado.id">
             <p>Nome: {{clienteSelecionado.nome}}</p>
             <p>Cpf: {{clienteSelecionado.cpf | cpfMask}}</p>
-            <div *ngIf="clienteSelecionado.endereco.length > 0">
-                <p>Endereco</p>
-                <ul>
-                    <li *ngFor="let e of clienteSelecionado.endereco">
-                        Cep:{{e.cep}},<br>
-                        Estado: {{e.estado}},<br>
-                        Cidade{{e.cidade}},<br>
-                        Rua:{{e.rua}},<br>
-                        Número{{e.numero}}<br><br>
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
 
@@ -67,9 +49,8 @@
             <!-- [dropSpecialCharacters] faz salvar nesse formato nao so exibir para o user neste formato -->
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
             <div *ngIf="formAdd.get('cpf')?.invalid && formAdd.get('cpf')?.touched">
-                <p *ngIf="formAdd.get('cpf')?.errors?.['required']">CPF é obrigatório</p>
-                <p *ngIf="formAdd.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</p>
-                <p *ngIf="formAdd.get('cpf')?.errors?.['maxlength']">CPF deve ter 11 números</p>
+                <small *ngIf="formAdd.get('cpf')?.errors?.['required']">CPF é obrigatório</small>
+                <small *ngIf="formAdd.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</small>
             </div>
 
             <button type="submit">Adicionar</button>
@@ -90,9 +71,11 @@
             <input type="text" formControlName="cpfAntigo" mask="000.000.000-00"
                 placeholder="Informe o cpf do Usuário a atualizar">
             <div *ngIf="formUpdate.get('cpfAntigo')?.invalid && formUpdate.get('nome')?.touched">
-                <p *ngIf="formUpdate.get('cpfAntigo')?.errors?.['required']">CPF obrigatório</p>
-                <p *ngIf=" formUpdate.get('cpfAntigo')?.errors?.['minlength']">CPF deve ter no minimo 11 caracteres</p>
-                <p *ngIf=" formUpdate.get('cpfAntigo')?.errors?.['maxlength']">CPF deve ter no maximo 11 caracteres</p>
+                <small *ngIf="formUpdate.get('cpfAntigo')?.errors?.['required']">CPF obrigatório</small>
+                <small *ngIf=" formUpdate.get('cpfAntigo')?.errors?.['minlength']">CPF deve ter no minimo 11
+                    caracteres</small>
+                <small *ngIf=" formUpdate.get('cpfAntigo')?.errors?.['maxlength']">CPF deve ter no maximo 11
+                    caracteres</small>
             </div>
 
             <!-- Nome -->
@@ -106,9 +89,9 @@
             <!-- CPF -->
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
             <div *ngIf="formUpdate.get('cpf')?.invalid && formUpdate.get('cpf')?.touched">
-                <p *ngIf="formUpdate.get('cpf')?.errors?.['required']">CPF é obrigatório</p>
-                <p *ngIf="formUpdate.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</p>
-                <p *ngIf="formUpdate.get('cpf')?.errors?.['maxlength']">CPF deve ter 11 números</p>
+                <small *ngIf="formUpdate.get('cpf')?.errors?.['required']">CPF é obrigatório</small>
+                <small *ngIf="formUpdate.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</small>
+                <small *ngIf="formUpdate.get('cpf')?.errors?.['maxlength']">CPF deve ter 11 números</small>
             </div>
 
             <button type="submit">Atualizar</button>
@@ -125,10 +108,16 @@
 
     <!-- deletar cliente -->
     <div class="deletarcliente">
-        <input type="text" [(ngModel)]="clienteCpfDelete" mask="000.000.000-00"
-            placeholder="informe o cpf do cliente a remover">
+        <form [formGroup]="formDelete" (submit)="deleteClienteAsync()">
 
-        <button (click)="deleteClienteAsync()">Excluir cliente</button>
+            <input type="text" formControlName="cpf" mask="000.000.000-00"
+                placeholder="Informe o cpf do cliente a ser deletado">
+            <div *ngIf="formDelete.get('cpf')?.invalid && formDelete.get('cpf')?.touched">
+                <small *ngIf="formDelete.get('cpf')?.errors?.['required']">Campo Obrigatorio</small>
+            </div>
+            <button type="submit">Deletar</button>
+        </form>
+
         <p *ngIf="clienteDeletado">{{clienteDeletado}}</p>
     </div>
 

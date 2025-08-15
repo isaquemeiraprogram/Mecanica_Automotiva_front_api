@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Endereco, EnderecoDto } from 'src/app/models/endereco.model';
 import { EnderecoService } from 'src/app/services/endereco.service';
+import { GetErrosService } from 'src/app/services/get-erros.service';
 
 @Component({
   selector: 'app-endereco-controller',
@@ -14,7 +15,7 @@ export class EnderecoControllerComponent implements OnInit {
   formPut!: FormGroup;
   formDelete!: FormGroup;
 
-  constructor(private fb: FormBuilder, private _enderecoService: EnderecoService) { }
+  constructor(private fb: FormBuilder, private _enderecoService: EnderecoService,private _erros:GetErrosService) { }
 
   ngOnInit(): void {
     this.GerarFormAdd();
@@ -125,6 +126,11 @@ export class EnderecoControllerComponent implements OnInit {
       },
       error: er => console.error("erros ao deletar", er)
     })
+  }
+
+  filtrarErro(control:AbstractControl):string[]{
+    const listErros = this._erros.GetErro(control)
+    return listErros;
   }
 }
 
