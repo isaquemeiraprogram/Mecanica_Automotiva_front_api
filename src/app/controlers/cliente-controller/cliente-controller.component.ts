@@ -28,13 +28,13 @@ export class ClienteControllerComponent implements OnInit {
 
   GerarFormGetByCpf() {
     this.formGetCpf = this.fb.group({
-      cpf: ["", [Validators.required]]
+      cpf: ["", [Validators.required, Validators.minLength(11)]]
     })
   }
 
   GerarFormAdd() {
     this.formAdd = this.fb.group({
-      nome: ["", [Validators.required, Validators.maxLength(80)]],
+      nome: ["", [Validators.required, Validators.maxLength(100)]],
       cpf: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
     });
   }
@@ -42,18 +42,57 @@ export class ClienteControllerComponent implements OnInit {
   GerarFormUpdate() {
     this.formUpdate = this.fb.group({
       cpfAntigo: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
-      nome: ["", [Validators.required, Validators.maxLength(80)]],
+      nome: ["", [Validators.required, Validators.maxLength(100)]],
       cpf: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
     });
   }
 
   GerarFormDelete() {
     this.formDelete = this.fb.group({
-      cpf: ["", [Validators.required]]
+      cpf: ["", [Validators.required,Validators.minLength(11), Validators.maxLength(11)]]
     })
   }
 
+  filtrarErro(control: AbstractControl): string[] {
+    const listErros = this._erros.GetErro(control)
+    return listErros;
+  }
 
+  //obter todos clientes
+  clientList: Cliente[] = [];
+  getAllClientesAsync() {
+    this.clienteService.getAllClientesAsync().subscribe({
+      next: dados => {
+        this.clientList = dados
+        console.log(dados)
+      },
+      error: er => console.error(er)
+    })
+  }
+
+//achar cliente
+  clienteSelecionado: Cliente = { id: "", nome: "", cpf: "" }
+
+  getClienteByCpfAsync() {
+    if (this.formGetCpf.invalid) {
+      this.formGetCpf.markAllAsTouched();
+      return;
+    }
+
+    const cpf = this.formGetCpf.get('cpf')?.value;//assim pega so valor do campo e nao form inteiro que vem no tipo objeto
+
+    console.log("Cpf enviado",cpf)
+
+    this.clienteService.getByCpfClienteAsync(cpf).subscribe({
+      next: dados => {
+        this.clienteSelecionado = dados
+        console.log(dados)
+      },
+      error: err => {
+        console.error("erro ao obter os dados", err);
+      }
+    })
+  }
 
   //add cliente 
   clienteAdicionado: Cliente = { id: "", nome: "", cpf: "" }
@@ -102,58 +141,35 @@ export class ClienteControllerComponent implements OnInit {
     })
   }
 
-  //obter todos clientes
-  clientList: Cliente[] = [];
-  getAllClientesAsync() {
-    this.clienteService.getAllClientesAsync().subscribe({
-      next: dados => {
-        this.clientList = dados
-        console.log(dados)
-      },
-      error: er => console.error(er)
-    })
-  }
-
-  //achar cliente
-  clienteSelecionado: Cliente = { id: "", nome: "", cpf: "" }
-
-  getClienteByCpfAsync() {
-    const cpf = this.formGetCpf.value;
-
-    console.log(cpf)
-    this.clienteService.getByCpfClienteAsync(cpf).subscribe({
-      next: dados => {
-        this.clienteSelecionado = dados
-        console.log(dados)
-      },
-      error: err => {
-        console.error("erro ao obter os dados", err);
-      }
-    })
-  }
-
-
   //deletar cliente
   clienteDeletado!: string
 
   deleteClienteAsync() {
 
-    const cpf = this.formDelete.value;
+    if (this.formDelete.invalid) {
+      this.formDelete.markAllAsTouched();
+      return;
+    }
+
+    // const cpfControl = this.formDelete.get('cpf');
+    const cpf = this.formDelete.get('cpf')?.value;
 
     this.clienteService.deleteClienteAsync(cpf).subscribe({
       next: dados => {
         this.clienteDeletado = "Cliente Deletado Com Sucesso";
         console.log(dados)
+        // cpfControl?.setErrors(null);
       },
-      error: err => {
+      error: (err) => {
+
+        // const erroBack =
+        //   typeof err.error == 'string' // se for string
+        //     ? err.error // se for json
+        //     : err.error?.message || "erro insperado ao buscar cliente"
+
         console.error("erro ao obter os dados", err)
       }
     })
-  }
-
-  filtrarErro(control: AbstractControl): string[] {
-    const listErros = this._erros.GetErro(control)
-    return listErros;
   }
 }
 

@@ -14,14 +14,16 @@ export class GetErrosService {
 
     const erros:string[] = [];
 
-    if (!control || !control.errors) return [];
+    if (!control || !control.errors || !control.touched) return [];
     
-    //.push e tipo add na lista
+    //.push e tipo add na lista -- ele nao vai exibir os erros se nao tiver no tipe os limitesmax lenght e minlenght
     if (control.errors['required']) erros.push('Campo obrigatório');
     if (control.errors['minlength']) erros.push(`caracteres insuficientes`);
     if (control.errors['maxlength']) erros.push(`limite de caracteres excedido`);
     if (control.errors['pattern']) erros.push('Formato inválido');
 
+
+    // if(control.errors['backend']) erros.push(control.errors['backend']);
     return erros;
   }
 }

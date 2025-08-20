@@ -20,9 +20,9 @@
         <form [formGroup]="formGetCpf" (submit)="getClienteByCpfAsync()">
 
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="Informe o Cpf da Busca">
-            <div *ngIf="formGetCpf.get('cpf')?.touched">
-                <small *ngFor="let erro of filtrarErro(formGetCpf.get('cpf')!)">{{ erro }}</small>
-            </div>
+
+            <!-- esse ! diz pro compilador confia em mim que nunca vai ser null -->
+            <small *ngFor="let erro of filtrarErro(formGetCpf.get('cpf')!)">{{ erro }}</small><br>
 
             <button type="submit">Buscar</button>
         </form>
@@ -31,6 +31,7 @@
             <p>Nome: {{clienteSelecionado.nome}}</p>
             <p>Cpf: {{clienteSelecionado.cpf | cpfMask}}</p>
         </div>
+
     </div>
 
     <!-- add cliente -->
@@ -39,19 +40,10 @@
         <form [formGroup]="formAdd" (ngSubmit)="addClienteAsync()">
 
             <input type="text" formControlName="nome" placeholder="Nome">
-            <small></small>
-            <div *ngIf="formAdd.get('nome')?.invalid && formAdd.get('nome')?.touched">
-                <small *ngIf="formAdd.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
-                <!-- minlenght em validator sempre minusculo no html pq e resultado -->
-                <small *ngIf="formAdd.get('nome')?.errors?.['maxlength']">Máximo 80 caracteres.</small>
-            </div>
+            <small *ngFor="let erro of filtrarErro(formAdd.get('nome')!)">{{ erro }}</small><br>
 
-            <!-- [dropSpecialCharacters] faz salvar nesse formato nao so exibir para o user neste formato -->
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
-            <div *ngIf="formAdd.get('cpf')?.invalid && formAdd.get('cpf')?.touched">
-                <small *ngIf="formAdd.get('cpf')?.errors?.['required']">CPF é obrigatório</small>
-                <small *ngIf="formAdd.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</small>
-            </div>
+            <small *ngFor="let erro of  filtrarErro(formAdd.get('cpf')!)">{{ erro }}</small><br>
 
             <button type="submit">Adicionar</button>
 
@@ -70,29 +62,15 @@
 
             <input type="text" formControlName="cpfAntigo" mask="000.000.000-00"
                 placeholder="Informe o cpf do Usuário a atualizar">
-            <div *ngIf="formUpdate.get('cpfAntigo')?.invalid && formUpdate.get('nome')?.touched">
-                <small *ngIf="formUpdate.get('cpfAntigo')?.errors?.['required']">CPF obrigatório</small>
-                <small *ngIf=" formUpdate.get('cpfAntigo')?.errors?.['minlength']">CPF deve ter no minimo 11
-                    caracteres</small>
-                <small *ngIf=" formUpdate.get('cpfAntigo')?.errors?.['maxlength']">CPF deve ter no maximo 11
-                    caracteres</small>
-            </div>
+            <small *ngFor="let erro of filtrarErro(formUpdate.get('cpfAntigo')!)">{{ erro }}</small><br>
 
             <!-- Nome -->
             <input type="text" formControlName="nome" placeholder="Nome">
-            <div *ngIf="formUpdate.get('nome')?.invalid && formUpdate.get('nome')?.touched">
-                <small *ngIf="formUpdate.get('nome')?.errors?.['required']">Nome é obrigatório.</small>
-                <!-- minlenght em validator sempre minusculo no html pq e resultado -->
-                <small *ngIf="formUpdate.get('nome')?.errors?.['maxlength']">Máximo 80 caracteres.</small>
-            </div>
+            <small *ngFor="let erro of filtrarErro(formUpdate.get('nome')!)">{{ erro }}</small><br>
 
             <!-- CPF -->
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
-            <div *ngIf="formUpdate.get('cpf')?.invalid && formUpdate.get('cpf')?.touched">
-                <small *ngIf="formUpdate.get('cpf')?.errors?.['required']">CPF é obrigatório</small>
-                <small *ngIf="formUpdate.get('cpf')?.errors?.['minlength']">CPF deve ter 11 números</small>
-                <small *ngIf="formUpdate.get('cpf')?.errors?.['maxlength']">CPF deve ter 11 números</small>
-            </div>
+            <small *ngFor="let erro of filtrarErro(formUpdate.get('cpf')!)">{{ erro }}</small><br>
 
             <button type="submit">Atualizar</button>
 
@@ -112,9 +90,8 @@
 
             <input type="text" formControlName="cpf" mask="000.000.000-00"
                 placeholder="Informe o cpf do cliente a ser deletado">
-            <div *ngIf="formDelete.get('cpf')?.invalid && formDelete.get('cpf')?.touched">
-                <small *ngIf="formDelete.get('cpf')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of filtrarErro(formDelete.get('cpf')!)">{{ erro }}</small><br>
+
             <button type="submit">Deletar</button>
         </form>
 
