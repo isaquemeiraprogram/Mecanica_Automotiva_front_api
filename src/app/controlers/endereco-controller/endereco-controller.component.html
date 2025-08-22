@@ -1,5 +1,18 @@
 <div class="container">
 
+    <!-- getbycpf -->
+    <div class="obterporcpf">
+        <form *ngIf="formGetCpf" [formGroup]="formGetCpf" (submit)="GetEnderecoByCpfAsync()">
+
+            <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="Informe o cpf da busca">
+            <small *ngFor="let erro of GetErros(formGetCpf.get('cpf')!)">{{erro}}</small>
+
+            <button type="submit">Buscar</button>
+        </form>
+
+        <p *ngFor="let linha of ShowObject(getreturn)">{{linha}} </p>
+
+    </div>
     <!-- add -->
     <div class="adicionar">
         <!-- sempre verifique se o form ja foi criado antes de usar o pipe senao da erro o pipe executa e nao acha nada -->
@@ -8,44 +21,33 @@
             <!-- primeiro chama o parametro do pipe,depois o pipe depois os outros parametros de tiver -->
             <!-- o 'as nome' guarda o valor retornado pela pipe em uma variável local -->
             <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
-            <div *ngIf="formAdd.get('cep')?.invalid && formAdd.get('cep')?.touched">
-                <small *ngIf="formAdd.get('cep')?.errors?.['required']">Campo Obrigatorio</small>
-                <small *ngIf="formAdd.get('cep')?.errors?.['minlength']">campo incompleto</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formAdd.get('cep')!)">{{erro}}</small>
 
             <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
-            <div *ngIf="formAdd.get('estado')?.invalid && formAdd.get('estado')?.touched">
-                <small *ngIf="formAdd.get('estado')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formAdd.get('estado')!)">{{erro}}</small>
 
             <input type="text" formControlName="cidade" placeholder="Cidade">
-            <div *ngIf="formAdd.get('cidade')?.invalid && formAdd.get('cidade')?.touched">
-                <small *ngIf="formAdd.get('cidade')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formAdd.get('cidade')!)">{{erro}}</small>
 
             <input type="text" formControlName="bairro" placeholder="bairro">
-            <div *ngIf="formAdd.get('bairro')?.invalid && formAdd.get('bairro')?.touched">
-                <small *ngIf="formAdd.get('bairro')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formAdd.get('bairro')!)">{{erro}}</small>
 
             <input type="text" formControlName="rua" placeholder="Rua">
-            <div *ngIf="formAdd.get('rua')?.invalid && formAdd.get('rua')?.touched">
-                <small *ngIf="formAdd.get('rua')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formAdd.get('rua')!)">{{erro}}</small>
 
             <input type="text" formControlName="numero" placeholder="Número">
-            <div *ngIf="formAdd.get('numero')?.invalid && formAdd.get('numero')?.touched">
-                <small *ngIf="formAdd.get('numero')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formAdd.get('numero')!)">{{erro}}</small>
 
             <input type="text" formControlName="complemento" placeholder="complemento(andar,bloco apartamento)">
+            <small *ngFor="let erro of GetErros(formAdd.get('complemento')!)">{{erro}}</small>
 
             <input type="text" formControlName="clienteCpf" mask="000.000.000-00" placeholder="cpf do cliente">
-            <div *ngIf="formAdd.get('clienteCpf')?.invalid && formAdd.get('clienteCpf')?.touched">
-                <small *ngIf="formAdd.get('clienteCpf')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formAdd.get('clienteCpf')!)">{{erro}}</small>
+
             <button type="submit">Adicionar</button>
         </form>
+
+        <p *ngFor="let linha of ShowObject(addReturn)">{{linha}}</p>
     </div>
 
     <!-- put -->
@@ -53,50 +55,37 @@
         <form *ngIf="formPut" [formGroup]="formPut" (submit)="UpdateEnderecoAsync()">
 
             <input type="text" formControlName="id" placeholder="informe o id do endereco">
-            <div *ngIf="formPut.get('id')?.invalid && formPut.get('id')?.touched">
-                <small *ngIf="formPut.get('id')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formPut.get('id')!)">{{erro}}</small>
 
             <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
-            <div *ngIf="formPut.get('cep')?.invalid && formPut.get('cep')?.touched">
-                <small *ngIf="formPut.get('cep')?.errors?.['required'] ">Campo Obrigatorio</small>
-                <small *ngIf="formPut.get('cep')?.errors?.['minlength']">campo incompleto</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formPut.get('cep')!)">{{erro}}</small>
 
             <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
-            <div *ngIf="formPut.get('estado')?.invalid && formPut.get('estado')?.touched">
-                <small *ngIf="formPut.get('estado')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formPut.get('estado')!)">{{erro}}</small>
 
             <input type="text" formControlName="cidade" placeholder="Cidade">
-            <div *ngIf="formPut.get('cidade')?.invalid && formPut.get('cidade')?.touched">
-                <small *ngIf="formPut.get('cidade')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formPut.get('cidade')!)">{{erro}}</small>
 
             <input type="text" formControlName="bairro" placeholder="bairro">
-            <div *ngIf="formPut.get('bairro')?.invalid && formPut.get('bairro')?.touched">
-                <small *ngIf="formPut.get('bairro')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formPut.get('bairro')!)">{{erro}}</small>
 
             <input type="text" formControlName="rua" placeholder="Rua">
-            <div *ngIf="formPut.get('rua')?.invalid && formPut.get('rua')?.touched">
-                <small *ngIf="formPut.get('rua')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formPut.get('rua')!)">{{erro}}</small>
 
             <input type="text" formControlName="numero" placeholder="Número">
-            <div *ngIf="formPut.get('numero')?.invalid && formPut.get('numero')?.touched">
-                <small *ngIf="formPut.get('numero')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formPut.get('numero')!)">{{erro}}</small>
 
             <input type="text" formControlName="complemento" placeholder="complemento(andar,bloco apartamento)">
+            <small *ngFor="let erro of GetErros(formPut.get('complemento')!)">{{erro}}</small>
 
             <input type="text" formControlName="clienteCpf" mask="000.000.000-00" placeholder="cpf do cliente">
-            <div *ngIf="formPut.get('clienteCpf')?.invalid && formPut.get('clienteCpf')?.touched">
-                <small *ngIf="formPut.get('clienteCpf')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <small *ngFor="let erro of GetErros(formPut.get('clienteCpf')!)">{{erro}}</small>
 
             <button type="submit">Atualizar</button>
         </form>
+
+        <p *ngFor="let linha of ShowObject(updateReturn)">{{linha}}</p>
+
     </div>
 
     <!-- delete -->
@@ -111,5 +100,7 @@
 
             <button type="submit">Deletar</button>
         </form>
+        
+        <p *ngIf="deleteReturn"> Deletado com sucesso</p>
     </div>
 </div>

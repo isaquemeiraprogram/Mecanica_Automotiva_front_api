@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, MinLengthValidator, Validators } from '@angular/forms';
+import { Observable, Subscriber } from 'rxjs';
 import { Endereco, EnderecoDto } from 'src/app/models/endereco.model';
 import { EnderecoService } from 'src/app/services/endereco.service';
 import { GetErrosService } from 'src/app/services/get-erros.service';
+import { ObjectFactoryService } from 'src/app/services/object-factory.service';
+import { ShowObjectService } from 'src/app/services/show-object.service';
 
 @Component({
   selector: 'app-endereco-controller',
@@ -11,11 +14,12 @@ import { GetErrosService } from 'src/app/services/get-erros.service';
 })
 export class EnderecoControllerComponent implements OnInit {
 
+  formGetCpf!: FormGroup;
   formAdd!: FormGroup;
   formPut!: FormGroup;
   formDelete!: FormGroup;
 
-  constructor(private fb: FormBuilder, private _enderecoService: EnderecoService,private _erros:GetErrosService) { }
+  constructor(private fb: FormBuilder, private _enderecoService: EnderecoService, private _erros: GetErrosService) { }
 
   ngOnInit(): void {
     this.GerarFormAdd();
@@ -24,20 +28,25 @@ export class EnderecoControllerComponent implements OnInit {
   }
   //sempre usa {} pra manusear objetos
 
+  GerarFormGetByCpf() {
+    this.formGetCpf = this.fb.group({
+      cpf: ["", [Validators.required, Validators.maxLength(11), Validators.minLength(11)]]
+    })
+  }
 
-  GerarFormAdd(): void {
+  GerarFormAdd() {
     this.formAdd = this.fb.group({
 
 
       // , Validators.minLength(8), Validators.maxLength(8) do cep
-      cep: ["", [Validators.required,Validators.minLength(8)]],
-      estado: ["", [Validators.required]],
-      cidade: ["", [Validators.required]],
-      bairro: ["", [Validators.required]],
-      rua: ["", [Validators.required]],
-      numero: ["", [Validators.required]],
-      complemento: [""],
-      clienteCpf: ["", [Validators.required]]
+      cep: ["", [Validators.required, Validators.minLength(8)]],
+      estado: ["", [Validators.required, Validators.maxLength(100)]],
+      cidade: ["", [Validators.required, Validators.maxLength(100)]],
+      bairro: ["", [Validators.required, Validators.maxLength(100)]],
+      rua: ["", [Validators.required, Validators.maxLength(100)]],
+      numero: ["", [Validators.required, Validators.maxLength(5)]],
+      complemento: ["", [Validators.maxLength(150)]],
+      clienteCpf: ["", [Validators.required, Validators.maxLength(11), Validators.minLength(11)]]
 
     })
   }
@@ -45,15 +54,15 @@ export class EnderecoControllerComponent implements OnInit {
   GerarFormPut() {
     this.formPut = this.fb.group({
 
-      id: ["", [Validators.required]],//cep antigo
-      cep: ["", [Validators.required]],
-      estado: ["", [Validators.required]],
-      cidade: ["", [Validators.required]],
-      bairro: ["", [Validators.required]],
-      rua: ["", [Validators.required]],
-      numero: ["", [Validators.required]],
-      complemento: [""],
-      clienteCpf: ["", [Validators.required]]
+      id: ["", [Validators.required, Validators.maxLength(36), Validators.minLength(36)]],
+      cep: ["", [Validators.required, Validators.minLength(8)]],
+      estado: ["", [Validators.required, Validators.maxLength(100)]],
+      cidade: ["", [Validators.required, Validators.maxLength(100)]],
+      bairro: ["", [Validators.required, Validators.maxLength(100)]],
+      rua: ["", [Validators.required, Validators.maxLength(100)]],
+      numero: ["", [Validators.required, Validators.maxLength(5)]],
+      complemento: ["", [Validators.maxLength(150)]],
+      clienteCpf: ["", [Validators.required, Validators.maxLength(11), Validators.minLength(11)]]
 
     })
   }
@@ -64,18 +73,46 @@ export class EnderecoControllerComponent implements OnInit {
     })
   }
 
+  //universais
+  GetErros(control: AbstractControl): string[] {
+    return GetErrosService.GetErro(control);
+  }
+
+  ShowObject(endereco:Endereco):string[] {
+    return ShowObjectService.MostrarEndereco(endereco);
+  }
+  //get
+  getreturn: Endereco = ObjectFactoryService.CriarEnderecoVazio()
+  GetEnderecoByCpfAsync() {
+
+    if (this.formGetCpf.invalid) {
+      this.formGetCpf.markAllAsTouched();
+      return
+    }
+
+    const cpf = this.formGetCpf.get('cpf')?.value;
+
+    return this._enderecoService.GetEnderecoByCpf(cpf).subscribe({
+      next: dados => {
+        this.getreturn = dados,
+          console.log("dados recebidos", dados)
+      },
+      error: er => console.error("falha na requisicao", er)
+    })
+  }
+
   //add
-  addReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "" }
+  //nao precisa injetar nem declarar no construtor pq o metodo statico
+  addReturn: Endereco = ObjectFactoryService.CriarEnderecoVazio();
   AddEnderecoAsync() {
-    console.log("add endereco chamado")
+
     if (this.formAdd.invalid) {
       this.formAdd.markAllAsTouched();
       return;
     }
-    console.log("add endereco passou na validacao")
+
     const dto: EnderecoDto = this.formAdd.value
 
-    console.log("o q esta sendo enviado", dto)
     return this._enderecoService.AddEnderecoAsync(dto).subscribe({
       next: dados => {
         this.addReturn = dados,
@@ -86,17 +123,19 @@ export class EnderecoControllerComponent implements OnInit {
   }
 
   // atualizar
-  updateReturn: Endereco = { id: "", cep: "", estado: "", cidade: "", bairro: "", rua: "", numero: "", complemento: "" }
+  updateReturn: Endereco = ObjectFactoryService.CriarEnderecoVazio()
+
   UpdateEnderecoAsync() {
     console.log(" update iniciado")
     if (this.formPut.invalid) {
       this.formPut.markAllAsTouched();
       return;
     }
-    console.log(" validacao iniciado")
 
-    const { id, cep, estado, cidade, bairro, rua, numero, complemento, clienteCpf } = this.formPut.value
-    const dto = { cep, estado, cidade, bairro, rua, numero, complemento, clienteCpf }
+    const id = this.formDelete.get("id")?.value;
+    const { id: _, ...dto } = this.formPut.value
+    // id o que extrair, _ convencao pra valores descartados(descarte valor do id), ...diz pra passar o resto pra dto
+    // variável do tipo any (recebe o valor do id do form)
 
     return this._enderecoService.UpdateEnderecoAsync(id, dto).subscribe({
       next: dados => {
@@ -128,9 +167,5 @@ export class EnderecoControllerComponent implements OnInit {
     })
   }
 
-  filtrarErro(control:AbstractControl):string[]{
-    const listErros = this._erros.GetErro(control)
-    return listErros;
-  }
 }
 

@@ -11,6 +11,9 @@ export class EnderecoService {
   private link = "https://localhost:7190/api/Endereco";
   constructor(private http: HttpClient) { }
 
+  GetEnderecoByCpf(cpf: string): Observable<Endereco> {
+    return this.http.get<Endereco>(this.link + "/cpf/" + cpf)
+  }
   AddEnderecoAsync(dto: EnderecoDto): Observable<Endereco> {
     return this.http.post<Endereco>(this.link, dto)
   }

@@ -1,3 +1,5 @@
+import { Cliente } from "./cliente.model"
+
 export interface Endereco {
     id: string,
     cep: string,
@@ -6,8 +8,8 @@ export interface Endereco {
     bairro:string,
     rua: string,
     numero: string,
-    complemento:string, // andar bloco aparatemento
-    //o que tem jsonIgore nao precisa
+    complemento:string,
+    cliente: Cliente
 }
 
 export interface EnderecoDto {
