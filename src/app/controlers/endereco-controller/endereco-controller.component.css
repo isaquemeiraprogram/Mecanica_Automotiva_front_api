@@ -4,6 +4,16 @@
     justify-content: center;
 }
 
+.obterporcpf {
+    background-color: aqua;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+
+}
+
 .adicionar {
     background-color: aqua;
     margin: 20px;
@@ -29,4 +39,8 @@
     flex-direction: column;
     width: 200px;
     height: 200px;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
 }

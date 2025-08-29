@@ -30,7 +30,7 @@ export class ObjectFactoryService {
       rua: "",
       numero: "",
       complemento: "",
-      cliente: this.CriarClienteVazio()
+      cliente: ObjectFactoryService.CriarClienteVazio()
     }
 
   }

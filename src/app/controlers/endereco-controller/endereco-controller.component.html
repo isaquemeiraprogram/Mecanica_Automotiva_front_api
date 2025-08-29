@@ -5,12 +5,13 @@
         <form *ngIf="formGetCpf" [formGroup]="formGetCpf" (submit)="GetEnderecoByCpfAsync()">
 
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="Informe o cpf da busca">
-            <small *ngFor="let erro of GetErros(formGetCpf.get('cpf')!)">{{erro}}</small>
+            <small *ngFor="let erro of GetErros(formGetCpf.get('cpf')!)">{{erro}}</small><br>
 
             <button type="submit">Buscar</button>
         </form>
 
-        <p *ngFor="let linha of ShowObject(getreturn)">{{linha}} </p>
+
+        <p *ngFor="let linha of getreturnList ">{{linha}}</p>
 
     </div>
     <!-- add -->
@@ -21,28 +22,29 @@
             <!-- primeiro chama o parametro do pipe,depois o pipe depois os outros parametros de tiver -->
             <!-- o 'as nome' guarda o valor retornado pela pipe em uma variável local -->
             <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
-            <small *ngFor="let erro of GetErros(formAdd.get('cep')!)">{{erro}}</small>
+            <small *ngFor="let erro of GetErros(formAdd.get('cep')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
-            <small *ngFor="let erro of GetErros(formAdd.get('estado')!)">{{erro}}</small>
+            <input type="text" formControlName="estado" maxlength="100" placeholder="Estado">
+            <small *ngFor="let erro of GetErros(formAdd.get('estado')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="cidade" placeholder="Cidade">
-            <small *ngFor="let erro of GetErros(formAdd.get('cidade')!)">{{erro}}</small>
+            <input type="text" formControlName="cidade" maxlength="100" placeholder="Cidade">
+            <small *ngFor="let erro of GetErros(formAdd.get('cidade')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="bairro" placeholder="bairro">
-            <small *ngFor="let erro of GetErros(formAdd.get('bairro')!)">{{erro}}</small>
+            <input type="text" formControlName="bairro" maxlength="100" placeholder="bairro">
+            <small *ngFor="let erro of GetErros(formAdd.get('bairro')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="rua" placeholder="Rua">
-            <small *ngFor="let erro of GetErros(formAdd.get('rua')!)">{{erro}}</small>
+            <input type="text" formControlName="rua" maxlength="100" placeholder="Rua">
+            <small *ngFor="let erro of GetErros(formAdd.get('rua')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="numero" placeholder="Número">
-            <small *ngFor="let erro of GetErros(formAdd.get('numero')!)">{{erro}}</small>
+            <input type="text" formControlName="numero" maxlength="5" placeholder="Número">
+            <small *ngFor="let erro of GetErros(formAdd.get('numero')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="complemento" placeholder="complemento(andar,bloco apartamento)">
-            <small *ngFor="let erro of GetErros(formAdd.get('complemento')!)">{{erro}}</small>
+            <input type="text" formControlName="complemento" maxlength="150"
+                placeholder="complemento(andar,bloco apartamento)">
+            <small *ngFor="let erro of GetErros(formAdd.get('complemento')!)">{{erro}}</small><br>
 
             <input type="text" formControlName="clienteCpf" mask="000.000.000-00" placeholder="cpf do cliente">
-            <small *ngFor="let erro of GetErros(formAdd.get('clienteCpf')!)">{{erro}}</small>
+            <small *ngFor="let erro of GetErros(formAdd.get('clienteCpf')!)">{{erro}}</small><br>
 
             <button type="submit">Adicionar</button>
         </form>
@@ -54,32 +56,33 @@
     <div class="atualizar">
         <form *ngIf="formPut" [formGroup]="formPut" (submit)="UpdateEnderecoAsync()">
 
-            <input type="text" formControlName="id" placeholder="informe o id do endereco">
-            <small *ngFor="let erro of GetErros(formPut.get('id')!)">{{erro}}</small>
+            <input type="text" formControlName="id" maxlength="36" placeholder="informe o id do endereco">
+            <small *ngFor="let erro of GetErros(formPut.get('id')!)">{{erro}}</small><br>
 
             <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
-            <small *ngFor="let erro of GetErros(formPut.get('cep')!)">{{erro}}</small>
+            <small *ngFor="let erro of GetErros(formPut.get('cep')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="estado" maxlength="35" placeholder="Estado">
-            <small *ngFor="let erro of GetErros(formPut.get('estado')!)">{{erro}}</small>
+            <input type="text" formControlName="estado" maxlength="100" placeholder="Estado">
+            <small *ngFor="let erro of GetErros(formPut.get('estado')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="cidade" placeholder="Cidade">
-            <small *ngFor="let erro of GetErros(formPut.get('cidade')!)">{{erro}}</small>
+            <input type="text" formControlName="cidade" maxlength="100" placeholder="Cidade">
+            <small *ngFor="let erro of GetErros(formPut.get('cidade')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="bairro" placeholder="bairro">
-            <small *ngFor="let erro of GetErros(formPut.get('bairro')!)">{{erro}}</small>
+            <input type="text" formControlName="bairro" maxlength="100" placeholder="bairro">
+            <small *ngFor="let erro of GetErros(formPut.get('bairro')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="rua" placeholder="Rua">
-            <small *ngFor="let erro of GetErros(formPut.get('rua')!)">{{erro}}</small>
+            <input type="text" formControlName="rua" maxlength="100" placeholder="Rua">
+            <small *ngFor="let erro of GetErros(formPut.get('rua')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="numero" placeholder="Número">
-            <small *ngFor="let erro of GetErros(formPut.get('numero')!)">{{erro}}</small>
+            <input type="text" formControlName="numero" maxlength="100" placeholder="Número">
+            <small *ngFor="let erro of GetErros(formPut.get('numero')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="complemento" placeholder="complemento(andar,bloco apartamento)">
-            <small *ngFor="let erro of GetErros(formPut.get('complemento')!)">{{erro}}</small>
+            <input type="text" formControlName="complemento" maxlength="150"
+                placeholder="complemento(andar,bloco apartamento)">
+            <small *ngFor="let erro of GetErros(formPut.get('complemento')!)">{{erro}}</small><br>
 
             <input type="text" formControlName="clienteCpf" mask="000.000.000-00" placeholder="cpf do cliente">
-            <small *ngFor="let erro of GetErros(formPut.get('clienteCpf')!)">{{erro}}</small>
+            <small *ngFor="let erro of GetErros(formPut.get('clienteCpf')!)">{{erro}}</small><br>
 
             <button type="submit">Atualizar</button>
         </form>
@@ -93,14 +96,13 @@
         <!-- delete -->
         <form *ngIf="formDelete" [formGroup]="formDelete" (submit)="DeleteEnderecoAsync()">
 
-            <input type="text" formControlName="id" placeholder="informe o id do endereco" maxlength="36">
-            <div *ngIf="formDelete.get('id')?.invalid && formDelete.get('id')?.touched">
-                <small *ngIf="formDelete.get('id')?.errors?.['required']">Campo Obrigatorio</small>
-            </div>
+            <input type="text" formControlName="id" maxlength="36" placeholder="informe o id do endereco"
+                maxlength="36">
+            <small *ngFor="let erro of GetErros(formDelete.get('id')!)">{{erro}}</small><br>
 
             <button type="submit">Deletar</button>
         </form>
-        
+
         <p *ngIf="deleteReturn"> Deletado com sucesso</p>
     </div>
 </div>

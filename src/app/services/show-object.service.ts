@@ -9,7 +9,7 @@ export class ShowObjectService {
 
   constructor() { }
 
-   static MostrarCliente(cliente: Cliente): string[] {
+  static MostrarCliente(cliente: Cliente): string[] {
 
     if (!cliente) return ["Cliente Indisponivel"];
 

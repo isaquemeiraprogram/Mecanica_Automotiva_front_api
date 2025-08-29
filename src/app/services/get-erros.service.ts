@@ -10,7 +10,7 @@ export class GetErrosService {
   //control e padrao pra pegar campo
   constructor(){}
 
-  GetErro(control:AbstractControl): string[] {
+   static GetErro(control:AbstractControl): string[] {
 
     const erros:string[] = [];
 

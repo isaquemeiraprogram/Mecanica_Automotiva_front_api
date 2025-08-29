@@ -22,6 +22,7 @@ export class EnderecoControllerComponent implements OnInit {
   constructor(private fb: FormBuilder, private _enderecoService: EnderecoService, private _erros: GetErrosService) { }
 
   ngOnInit(): void {
+    this.GerarFormGetByCpf();
     this.GerarFormAdd();
     this.GerarFormPut();
     this.GerarFormDelete();
@@ -78,11 +79,13 @@ export class EnderecoControllerComponent implements OnInit {
     return GetErrosService.GetErro(control);
   }
 
-  ShowObject(endereco:Endereco):string[] {
+  ShowObject(endereco: Endereco): string[] {
     return ShowObjectService.MostrarEndereco(endereco);
   }
+
   //get
-  getreturn: Endereco = ObjectFactoryService.CriarEnderecoVazio()
+  getreturn: Endereco[] = [] //recebe os enderecos em si
+  getreturnList: string[] = [] //recebe todos enderecos convertidos em objeto
   GetEnderecoByCpfAsync() {
 
     if (this.formGetCpf.invalid) {
@@ -94,8 +97,14 @@ export class EnderecoControllerComponent implements OnInit {
 
     return this._enderecoService.GetEnderecoByCpf(cpf).subscribe({
       next: dados => {
-        this.getreturn = dados,
-          console.log("dados recebidos", dados)
+        this.getreturn = dados;
+        console.log("dados recebidos", dados);
+        //1. `map` → transforma cada endereço em uma lista de strings.
+        // 2. `flat` → junta todas essas listas em **um único array de strings**.
+        //flat map pega cada endereco da lista de endereco e transforma em uma lista de strings formando uma lista de listas de strings
+        this.getreturnList = dados.flatMap((item: Endereco) =>
+          ShowObjectService.MostrarEndereco(item)
+        );
       },
       error: er => console.error("falha na requisicao", er)
     })
@@ -147,7 +156,7 @@ export class EnderecoControllerComponent implements OnInit {
   }
 
 
-  enderecoReturn!: boolean
+  deleteReturn: boolean = false
   DeleteEnderecoAsync() {
     if (this.formDelete.invalid) {
       this.formDelete.markAllAsTouched();
@@ -160,7 +169,7 @@ export class EnderecoControllerComponent implements OnInit {
 
     return this._enderecoService.DeleteEnderecoAsync(id).subscribe({
       next: dados => {
-        this.enderecoReturn = dados,
+        this.deleteReturn = dados,
           console.log(dados + "endereco deletado com sucesso")
       },
       error: er => console.error("erros ao deletar", er)
