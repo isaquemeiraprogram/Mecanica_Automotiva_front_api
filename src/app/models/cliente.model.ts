@@ -2,6 +2,7 @@ export interface Cliente{ // o que agente manipula  -- quando faz get recebemos 
     id:string,
     nome:string,
     cpf:string,
+    qtdEnderecosCadastrados:number
 }
 
 export interface ClienteDto{//o que precisa pro banco --o q é dado pra fazer post

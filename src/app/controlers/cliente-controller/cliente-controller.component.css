@@ -10,9 +10,10 @@
     height: 200px;
 }
 
-.clienteListgetall {
+.cliente-card {
     max-height: 180px;
     overflow-y: auto;
+    border: 1px solid rgb(0, 0, 0);
 
     background-color: white;
     list-style-type: none;
@@ -81,5 +82,5 @@
 }
 
 input.ng-invalid.ng-touched {
-  border: 1px solid red;
+  border: 2px solid rgb(248, 57, 57);
 }

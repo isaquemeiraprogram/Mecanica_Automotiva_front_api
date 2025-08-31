@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Cliente, ClienteDto } from 'src/app/models/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { GetErrosService } from 'src/app/services/get-erros.service';
+import { ObjectFactoryService } from 'src/app/services/object-factory.service';
+import { ShowObjectService } from 'src/app/services/show-object.service';
 
 @Component({
   selector: 'app-cliente-controller',
@@ -17,7 +19,7 @@ export class ClienteControllerComponent implements OnInit {
   formUpdate!: FormGroup;
   formDelete!: FormGroup;
 
-  constructor(private fb: FormBuilder, private clienteService: ClienteService, private _erros: GetErrosService) { }
+  constructor(private fb: FormBuilder, private clienteService: ClienteService) { }
 
   ngOnInit(): void {
     this.GerarFormGetByCpf();
@@ -26,6 +28,7 @@ export class ClienteControllerComponent implements OnInit {
     this.GerarFormDelete();
   }
 
+  //inicializacoes
   GerarFormGetByCpf() {
     this.formGetCpf = this.fb.group({
       cpf: ["", [Validators.required, Validators.minLength(11)]]
@@ -49,29 +52,34 @@ export class ClienteControllerComponent implements OnInit {
 
   GerarFormDelete() {
     this.formDelete = this.fb.group({
-      cpf: ["", [Validators.required,Validators.minLength(11), Validators.maxLength(11)]]
+      cpf: ["", [Validators.required, Validators.minLength(11), Validators.maxLength(11)]]
     })
   }
 
-  filtrarErro(control: AbstractControl): string[] {
-    const listErros = this._erros.GetErro(control)
-    return listErros;
+  //universais
+  GetErros(control: AbstractControl): string[] {
+    return GetErrosService.GetErro(control)
+  }
+
+  ShowObject(cliente: Cliente): string[] {
+    return ShowObjectService.MostrarCliente(cliente);
   }
 
   //obter todos clientes
-  clientList: Cliente[] = [];
+  getAllReturn: Cliente[] = [];
+
   getAllClientesAsync() {
     this.clienteService.getAllClientesAsync().subscribe({
       next: dados => {
-        this.clientList = dados
+        this.getAllReturn = dados
         console.log(dados)
       },
       error: er => console.error(er)
     })
   }
 
-//achar cliente
-  clienteSelecionado: Cliente = { id: "", nome: "", cpf: "" }
+  //achar cliente
+  getReturn = ObjectFactoryService.CriarClienteVazio()
 
   getClienteByCpfAsync() {
     if (this.formGetCpf.invalid) {
@@ -81,11 +89,11 @@ export class ClienteControllerComponent implements OnInit {
 
     const cpf = this.formGetCpf.get('cpf')?.value;//assim pega so valor do campo e nao form inteiro que vem no tipo objeto
 
-    console.log("Cpf enviado",cpf)
+    console.log("Cpf enviado", cpf)
 
     this.clienteService.getByCpfClienteAsync(cpf).subscribe({
       next: dados => {
-        this.clienteSelecionado = dados
+        this.getReturn = dados
         console.log(dados)
       },
       error: err => {
@@ -95,8 +103,7 @@ export class ClienteControllerComponent implements OnInit {
   }
 
   //add cliente 
-  clienteAdicionado: Cliente = { id: "", nome: "", cpf: "" }
-
+  addReturn: Cliente = ObjectFactoryService.CriarClienteVazio();
   addClienteAsync() {
 
     if (this.formAdd.invalid) {
@@ -108,7 +115,7 @@ export class ClienteControllerComponent implements OnInit {
 
     this.clienteService.addClienteAsync(dto).subscribe({
       next: dados => {
-        this.clienteAdicionado = dados
+        this.addReturn = dados
         console.log("Cliente Adicionado" + dados)
         this.formAdd.reset();//limpa o formulario
       },
@@ -118,7 +125,7 @@ export class ClienteControllerComponent implements OnInit {
 
 
   //AtualizarCliente
-  clienteAtualizado: Cliente = { id: "", nome: "", cpf: "" }
+  updateReturn: Cliente = ObjectFactoryService.CriarClienteVazio();
 
   updateClienteAsync() {
 
@@ -133,16 +140,16 @@ export class ClienteControllerComponent implements OnInit {
 
     this.clienteService.updateClienteAsync(cpfAntigo, dto).subscribe({
       next: dados => {
-        this.clienteAtualizado = dados;
+        this.updateReturn = dados;
         console.log("cliente atualizado" + dados)
-        this.formAdd.reset();
+        this.formUpdate.reset();
       },
       error: er => console.error("Erro ao atualizar cliente", er)
     })
   }
 
   //deletar cliente
-  clienteDeletado!: string
+  deleteReturn!: string
 
   deleteClienteAsync() {
 
@@ -156,19 +163,12 @@ export class ClienteControllerComponent implements OnInit {
 
     this.clienteService.deleteClienteAsync(cpf).subscribe({
       next: dados => {
-        this.clienteDeletado = "Cliente Deletado Com Sucesso";
+        this.deleteReturn = "Cliente Deletado Com Sucesso";
         console.log(dados)
-        // cpfControl?.setErrors(null);
+        this.formDelete.reset();
       },
-      error: (err) => {
+      error: (er) => console.error("erro ao obter os dados", er)
 
-        // const erroBack =
-        //   typeof err.error == 'string' // se for string
-        //     ? err.error // se for json
-        //     : err.error?.message || "erro insperado ao buscar cliente"
-
-        console.error("erro ao obter os dados", err)
-      }
     })
   }
 }

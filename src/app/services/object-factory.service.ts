@@ -15,7 +15,8 @@ export class ObjectFactoryService {
     return {
       id: "",
       nome: "",
-      cpf: ""
+      cpf: "",
+      qtdEnderecosCadastrados:0
     };
   }
 

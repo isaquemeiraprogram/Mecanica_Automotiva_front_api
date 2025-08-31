@@ -3,15 +3,15 @@
     <!-- obter todos clientes -->
     <div class="obterTodosClientes">
 
+        <!--Fazer Requisicao-->
         <button (click)="getAllClientesAsync()">Obter Todos Clientes</button>
 
-        <ul class="clienteListgetall" *ngIf="clientList">
-            <li *ngFor="let cliente of clientList" class="clienteDList">
-                <p>Nome: {{cliente.nome}} </p>
-                <p>Cpf: {{cliente.cpf | cpfMask}}</p>
-            </li>
-        </ul>
+        <!--Mostrar Objeto-->
+        <!-- <p *ngFor="let linha of ShowObject(getAllReturn)">{{linha}}</p> -->
 
+        <div *ngFor="let cliente of getAllReturn" class="cliente-card">
+            <p *ngFor="let linha of ShowObject(cliente)">{{ linha }}</p>
+        </div>
     </div>
 
     <!-- obter cliente -->
@@ -22,15 +22,12 @@
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="Informe o Cpf da Busca">
 
             <!-- esse ! diz pro compilador confia em mim que nunca vai ser null -->
-            <small *ngFor="let erro of filtrarErro(formGetCpf.get('cpf')!)">{{ erro }}</small><br>
+            <small *ngFor="let erro of GetErros(formGetCpf.get('cpf')!)">{{ erro }}</small><br>
 
             <button type="submit">Buscar</button>
         </form>
 
-        <div class="clienteId" *ngIf="clienteSelecionado.id">
-            <p>Nome: {{clienteSelecionado.nome}}</p>
-            <p>Cpf: {{clienteSelecionado.cpf | cpfMask}}</p>
-        </div>
+        <p *ngFor="let linha of ShowObject(getReturn)">{{linha}}</p>
 
     </div>
 
@@ -39,20 +36,17 @@
 
         <form [formGroup]="formAdd" (ngSubmit)="addClienteAsync()">
 
-            <input type="text" formControlName="nome" placeholder="Nome">
-            <small *ngFor="let erro of filtrarErro(formAdd.get('nome')!)">{{ erro }}</small><br>
+            <input type="text" formControlName="nome" maxlength="100" placeholder="Nome">
+            <small *ngFor="let erro of GetErros(formAdd.get('nome')!)">{{ erro }}</small><br>
 
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
-            <small *ngFor="let erro of  filtrarErro(formAdd.get('cpf')!)">{{ erro }}</small><br>
+            <small *ngFor="let erro of  GetErros(formAdd.get('cpf')!)">{{ erro }}</small><br>
 
             <button type="submit">Adicionar</button>
 
         </form>
 
-        <div class="clienteAdd" *ngIf="clienteAdicionado.id">
-            <p>Nome: {{clienteAdicionado.nome}}</p>
-            <p>CPF: {{clienteAdicionado.cpf}}</p>
-        </div>
+        <p *ngFor="let linha of ShowObject(addReturn)">{{linha}}</p>
     </div>
 
 
@@ -62,24 +56,21 @@
 
             <input type="text" formControlName="cpfAntigo" mask="000.000.000-00"
                 placeholder="Informe o cpf do Usuário a atualizar">
-            <small *ngFor="let erro of filtrarErro(formUpdate.get('cpfAntigo')!)">{{ erro }}</small><br>
+            <small *ngFor="let erro of GetErros(formUpdate.get('cpfAntigo')!)">{{ erro }}</small><br>
 
             <!-- Nome -->
-            <input type="text" formControlName="nome" placeholder="Nome">
-            <small *ngFor="let erro of filtrarErro(formUpdate.get('nome')!)">{{ erro }}</small><br>
+            <input type="text" formControlName="nome" maxlength="100" placeholder="Nome">
+            <small *ngFor="let erro of GetErros(formUpdate.get('nome')!)">{{ erro }}</small><br>
 
             <!-- CPF -->
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="CPF">
-            <small *ngFor="let erro of filtrarErro(formUpdate.get('cpf')!)">{{ erro }}</small><br>
+            <small *ngFor="let erro of GetErros(formUpdate.get('cpf')!)">{{ erro }}</small><br>
 
             <button type="submit">Atualizar</button>
 
         </form>
 
-        <div class="clienteup" *ngIf="clienteAtualizado.id">
-            <p>Nome: {{clienteAtualizado.nome}}</p>
-            <p>CPF: {{clienteAtualizado.cpf}}</p>
-        </div>
+        <p *ngFor="let linha of ShowObject(updateReturn)">{{linha}}</p>
 
     </div>
 
@@ -90,12 +81,12 @@
 
             <input type="text" formControlName="cpf" mask="000.000.000-00"
                 placeholder="Informe o cpf do cliente a ser deletado">
-            <small *ngFor="let erro of filtrarErro(formDelete.get('cpf')!)">{{ erro }}</small><br>
+            <small *ngFor="let erro of GetErros(formDelete.get('cpf')!)">{{ erro }}</small><br>
 
             <button type="submit">Deletar</button>
         </form>
 
-        <p *ngIf="clienteDeletado">{{clienteDeletado}}</p>
+        <p *ngIf="deleteReturn">Cliente Deletado Com Sucesso</p>
     </div>
 
     <!-- busca deletar e atualizar por cpf -->
