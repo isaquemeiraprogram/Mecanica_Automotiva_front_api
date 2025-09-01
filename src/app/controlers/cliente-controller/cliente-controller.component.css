@@ -4,17 +4,26 @@
     justify-content: center;
 }
 
-.obterTodosClientes {
-    background-color: aqua;
+.formulario {
+    max-height: 180px;
+    overflow-y: auto;
+
+    background-color: rgb(0, 255, 255);
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
     width: 200px;
     height: 200px;
 }
 
+.listaDeClientes {
+    background-color: gray;
+    width: 160px;
+    height: 160px;
+    padding: 10px;
+    border: 2px solid black;
+}
 .cliente-card {
-    max-height: 180px;
-    overflow-y: auto;
-    border: 1px solid rgb(0, 0, 0);
-
     background-color: white;
     list-style-type: none;
     padding: 10px;
@@ -23,63 +32,10 @@
     align-items: center;
 }
 
-.enderecoDecliente {
-    list-style-type: none;
-}
 
-.clienteDList {
-    background-color: gray;
-    width: 160px;
-    height: 160px;
-    padding: 10px;
-    border: 2px solid black;
-}
 
-.buscarCliente {
-    background-color: aqua;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 200px;
-}
 
-.adicionarcliente {
-    background-color: aqua;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 200px;
-}
 
-.atualizarCliente {
-    background-color: aqua;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 200px;
-}
-
-.deletarcliente {
-    background-color: aqua;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 200px;
-}
-
-.formulario {
-    display: flex;
-    flex-direction: column;
-}
-
-.selecionarModo {
-    display: flex;
-    flex-direction: column;
-}
 
 input.ng-invalid.ng-touched {
   border: 2px solid rgb(248, 57, 57);

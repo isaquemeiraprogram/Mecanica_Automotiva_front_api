@@ -66,12 +66,12 @@ export class ClienteControllerComponent implements OnInit {
   }
 
   //obter todos clientes
-  getAllReturn: Cliente[] = [];
+  getAllReturnList: Cliente[] = [];
 
   getAllClientesAsync() {
     this.clienteService.getAllClientesAsync().subscribe({
       next: dados => {
-        this.getAllReturn = dados
+        this.getAllReturnList = dados
         console.log(dados)
       },
       error: er => console.error(er)

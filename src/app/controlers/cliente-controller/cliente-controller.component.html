@@ -1,7 +1,7 @@
 <div class="container">
 
     <!-- obter todos clientes -->
-    <div class="obterTodosClientes">
+    <div class="formulario">
 
         <!--Fazer Requisicao-->
         <button (click)="getAllClientesAsync()">Obter Todos Clientes</button>
@@ -9,13 +9,13 @@
         <!--Mostrar Objeto-->
         <!-- <p *ngFor="let linha of ShowObject(getAllReturn)">{{linha}}</p> -->
 
-        <div *ngFor="let cliente of getAllReturn" class="cliente-card">
-            <p *ngFor="let linha of ShowObject(cliente)">{{ linha }}</p>
+        <div *ngFor="let cliente of getAllReturnList" class="listaDeClientes">
+            <p *ngFor="let linha of ShowObject(cliente)" class="cliente-card">{{ linha }}</p>
         </div>
     </div>
 
     <!-- obter cliente -->
-    <div class="buscarCliente">
+    <div class="formulario">
 
         <form [formGroup]="formGetCpf" (submit)="getClienteByCpfAsync()">
 
@@ -27,12 +27,12 @@
             <button type="submit">Buscar</button>
         </form>
 
-        <p *ngFor="let linha of ShowObject(getReturn)">{{linha}}</p>
+        <p *ngFor="let linha of ShowObject(getReturn)" class="cliente-card">{{linha}}</p>
 
     </div>
 
     <!-- add cliente -->
-    <div class="adicionarcliente">
+    <div class="formulario">
 
         <form [formGroup]="formAdd" (ngSubmit)="addClienteAsync()">
 
@@ -46,12 +46,12 @@
 
         </form>
 
-        <p *ngFor="let linha of ShowObject(addReturn)">{{linha}}</p>
+        <p *ngFor="let linha of ShowObject(addReturn)" class="cliente-card">{{linha}}</p>
     </div>
 
 
     <!-- atualizar cliente -->
-    <div class="atualizarCliente">
+    <div class="formulario">
         <form [formGroup]="formUpdate" (submit)="updateClienteAsync()">
 
             <input type="text" formControlName="cpfAntigo" mask="000.000.000-00"
@@ -70,13 +70,13 @@
 
         </form>
 
-        <p *ngFor="let linha of ShowObject(updateReturn)">{{linha}}</p>
+        <p *ngFor="let linha of ShowObject(updateReturn)" class="cliente-card">{{linha}}</p>
 
     </div>
 
 
     <!-- deletar cliente -->
-    <div class="deletarcliente">
+    <div class="formulario">
         <form [formGroup]="formDelete" (submit)="deleteClienteAsync()">
 
             <input type="text" formControlName="cpf" mask="000.000.000-00"
@@ -86,7 +86,7 @@
             <button type="submit">Deletar</button>
         </form>
 
-        <p *ngIf="deleteReturn">Cliente Deletado Com Sucesso</p>
+        <p *ngIf="deleteReturn" class="cliente-card">Cliente Deletado Com Sucesso</p>
     </div>
 
     <!-- busca deletar e atualizar por cpf -->
