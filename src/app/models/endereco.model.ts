@@ -2,6 +2,7 @@ import { Cliente } from "./cliente.model"
 
 export interface Endereco {
     id: string,
+    enderecoSlug:string,
     cep: string,
     estado: string,
     cidade: string,

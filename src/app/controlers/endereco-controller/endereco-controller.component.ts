@@ -55,7 +55,7 @@ export class EnderecoControllerComponent implements OnInit {
   GerarFormPut() {
     this.formPut = this.fb.group({
 
-      id: ["", [Validators.required, Validators.maxLength(36), Validators.minLength(36)]],
+      enderecoSlug: ["", [Validators.required, Validators.maxLength(20)]],
       cep: ["", [Validators.required, Validators.minLength(8)]],
       estado: ["", [Validators.required, Validators.maxLength(100)]],
       cidade: ["", [Validators.required, Validators.maxLength(100)]],
@@ -70,7 +70,7 @@ export class EnderecoControllerComponent implements OnInit {
 
   GerarFormDelete() {
     this.formDelete = this.fb.group({
-      id: ["", [Validators.required, Validators.maxLength(36), Validators.minLength(36)]]
+      id: ["", [Validators.required, Validators.maxLength(20)]]
     })
   }
 
@@ -83,9 +83,8 @@ export class EnderecoControllerComponent implements OnInit {
     return ShowObjectService.MostrarEndereco(endereco);
   }
 
-  //get
-  getreturn: Endereco[] = [] //recebe os enderecos em si
-  getreturnList: string[] = [] //recebe todos enderecos convertidos em objeto
+  //get um cliente pode ter varios enderecos
+  getReturnList: Endereco[] = []
   GetEnderecoByCpfAsync() {
 
     if (this.formGetCpf.invalid) {
@@ -97,14 +96,8 @@ export class EnderecoControllerComponent implements OnInit {
 
     return this._enderecoService.GetEnderecoByCpf(cpf).subscribe({
       next: dados => {
-        this.getreturn = dados;
+        this.getReturnList = dados;
         console.log("dados recebidos", dados);
-        //1. `map` → transforma cada endereço em uma lista de strings.
-        // 2. `flat` → junta todas essas listas em **um único array de strings**.
-        //flat map pega cada endereco da lista de endereco e transforma em uma lista de strings formando uma lista de listas de strings
-        this.getreturnList = dados.flatMap((item: Endereco) =>
-          ShowObjectService.MostrarEndereco(item)
-        );
       },
       error: er => console.error("falha na requisicao", er)
     })
@@ -135,18 +128,19 @@ export class EnderecoControllerComponent implements OnInit {
   updateReturn: Endereco = ObjectFactoryService.CriarEnderecoVazio()
 
   UpdateEnderecoAsync() {
-    console.log(" update iniciado")
+    
     if (this.formPut.invalid) {
       this.formPut.markAllAsTouched();
       return;
     }
 
-    const id = this.formDelete.get("id")?.value;
-    const { id: _, ...dto } = this.formPut.value
+    const enderecoSlug = this.formPut.get("enderecoSlug")?.value;//aqui pega so id
+    const { enderecoSlug: _, ...dto } = this.formPut.value;//aqui pega tudo -id
     // id o que extrair, _ convencao pra valores descartados(descarte valor do id), ...diz pra passar o resto pra dto
     // variável do tipo any (recebe o valor do id do form)
 
-    return this._enderecoService.UpdateEnderecoAsync(id, dto).subscribe({
+    console.log(dto)
+    return this._enderecoService.UpdateEnderecoAsync(enderecoSlug, dto).subscribe({
       next: dados => {
         this.updateReturn = dados,
           console.log("Endereco Atualizado" + dados)

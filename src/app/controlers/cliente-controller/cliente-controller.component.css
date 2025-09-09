@@ -32,11 +32,6 @@
     align-items: center;
 }
 
-
-
-
-
-
 input.ng-invalid.ng-touched {
   border: 2px solid rgb(248, 57, 57);
 }

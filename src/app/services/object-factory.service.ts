@@ -24,6 +24,7 @@ export class ObjectFactoryService {
 
     return {
       id: "",
+      enderecoSlug: "",
       cep: "",
       estado: "",
       cidade: "",

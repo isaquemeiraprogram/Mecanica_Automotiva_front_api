@@ -28,9 +28,11 @@ export class ShowObjectService {
 
   static MostrarEndereco(endereco: Endereco): string[] {
 
-    if (!endereco) return ["Cliente indisponivel"]
+    if (!endereco) return ["Cliente indisponivel"];
+    if (!endereco.id) return [];
 
     return [
+      `Id do endereco: ${endereco.enderecoSlug}`,
       `Cep: ${endereco.cep}`,
       `Estado: ${endereco.estado}`,
       `Cidade: ${endereco.cidade}`,

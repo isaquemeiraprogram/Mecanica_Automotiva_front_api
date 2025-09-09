@@ -18,11 +18,11 @@ export class EnderecoService {
     return this.http.post<Endereco>(this.link, dto)
   }
 
-  UpdateEnderecoAsync(id: string, dto: EnderecoDto): Observable<Endereco> {
-    return this.http.put<Endereco>(this.link + "/" + id, dto)
+  UpdateEnderecoAsync(slug: string, dto: EnderecoDto): Observable<Endereco> {
+    return this.http.put<Endereco>(this.link + "/slug/" + slug, dto)
   }
 
-  DeleteEnderecoAsync(id: string): Observable<boolean> {
-    return this.http.delete<boolean>(this.link + "/" + id)
+  DeleteEnderecoAsync(slug: string): Observable<boolean> {
+    return this.http.delete<boolean>(this.link + "/slug/" + slug)
   }
 }

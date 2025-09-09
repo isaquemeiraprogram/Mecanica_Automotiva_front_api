@@ -17,7 +17,6 @@ import { AppcomponentComponent } from './appcomponent/appcomponent.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ClienteControllerComponent } from './controlers/cliente-controller/cliente-controller.component';
 import { EnderecoControllerComponent } from './controlers/endereco-controller/endereco-controller.component';
-import { CpfMaskPipe } from './pipes/cpf-mask.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,6 @@ import { CpfMaskPipe } from './pipes/cpf-mask.pipe';
     AppcomponentComponent,
     ClienteControllerComponent,
     EnderecoControllerComponent,
-    CpfMaskPipe
   ],
   imports: [
     BrowserModule,

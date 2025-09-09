@@ -1,7 +1,7 @@
 <div class="container">
 
     <!-- getbycpf -->
-    <div class="obterporcpf">
+    <div class="formulario">
         <form *ngIf="formGetCpf" [formGroup]="formGetCpf" (submit)="GetEnderecoByCpfAsync()">
 
             <input type="text" formControlName="cpf" mask="000.000.000-00" placeholder="Informe o cpf da busca">
@@ -10,12 +10,14 @@
             <button type="submit">Buscar</button>
         </form>
 
-
-        <p *ngFor="let linha of getreturnList ">{{linha}}</p>
+        <!--pra obter todos enderecos daquele cpf-->
+        <div *ngFor="let endereco of getReturnList" class="listaDeEndereco">
+            <p *ngFor="let linha of ShowObject(endereco)" class="endereco-card">{{linha}}</p>
+        </div>
 
     </div>
     <!-- add -->
-    <div class="adicionar">
+    <div class="formulario">
         <!-- sempre verifique se o form ja foi criado antes de usar o pipe senao da erro o pipe executa e nao acha nada -->
         <form *ngIf="formAdd" [formGroup]="formAdd" (ngSubmit)="AddEnderecoAsync()">
 
@@ -49,15 +51,15 @@
             <button type="submit">Adicionar</button>
         </form>
 
-        <p *ngFor="let linha of ShowObject(addReturn)">{{linha}}</p>
+        <p *ngFor="let linha of ShowObject(addReturn)" class="endereco-card">{{linha}}</p>
     </div>
 
     <!-- put -->
-    <div class="atualizar">
+    <div class="formulario">
         <form *ngIf="formPut" [formGroup]="formPut" (submit)="UpdateEnderecoAsync()">
 
-            <input type="text" formControlName="id" maxlength="36" placeholder="informe o id do endereco">
-            <small *ngFor="let erro of GetErros(formPut.get('id')!)">{{erro}}</small><br>
+            <input type="text" formControlName="enderecoSlug" maxlength="20" placeholder="informe o id do endereco">
+            <small *ngFor="let erro of GetErros(formPut.get('enderecoSlug')!)">{{erro}}</small><br>
 
             <input type="text" formControlName="cep" placeholder="cep" mask="00000-000">
             <small *ngFor="let erro of GetErros(formPut.get('cep')!)">{{erro}}</small><br>
@@ -74,7 +76,7 @@
             <input type="text" formControlName="rua" maxlength="100" placeholder="Rua">
             <small *ngFor="let erro of GetErros(formPut.get('rua')!)">{{erro}}</small><br>
 
-            <input type="text" formControlName="numero" maxlength="100" placeholder="Número">
+            <input type="text" formControlName="numero" maxlength="5" placeholder="Número">
             <small *ngFor="let erro of GetErros(formPut.get('numero')!)">{{erro}}</small><br>
 
             <input type="text" formControlName="complemento" maxlength="150"
@@ -87,22 +89,22 @@
             <button type="submit">Atualizar</button>
         </form>
 
-        <p *ngFor="let linha of ShowObject(updateReturn)">{{linha}}</p>
+        <p *ngFor="let linha of ShowObject(updateReturn)" class="endereco-card">{{linha}}</p>
 
     </div>
 
     <!-- delete -->
-    <div class="deletar">
+    <div class="formulario">
         <!-- delete -->
         <form *ngIf="formDelete" [formGroup]="formDelete" (submit)="DeleteEnderecoAsync()">
 
-            <input type="text" formControlName="id" maxlength="36" placeholder="informe o id do endereco"
+            <input type="text" formControlName="id" maxlength="20" placeholder="informe o id do endereco"
                 maxlength="36">
             <small *ngFor="let erro of GetErros(formDelete.get('id')!)">{{erro}}</small><br>
 
             <button type="submit">Deletar</button>
         </form>
 
-        <p *ngIf="deleteReturn"> Deletado com sucesso</p>
+        <p *ngIf="deleteReturn" class="endereco-card"> Deletado com sucesso</p>
     </div>
 </div>
