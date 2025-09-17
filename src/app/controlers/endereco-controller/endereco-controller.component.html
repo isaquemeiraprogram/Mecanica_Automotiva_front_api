@@ -98,9 +98,8 @@
         <!-- delete -->
         <form *ngIf="formDelete" [formGroup]="formDelete" (submit)="DeleteEnderecoAsync()">
 
-            <input type="text" formControlName="id" maxlength="20" placeholder="informe o id do endereco"
-                maxlength="36">
-            <small *ngFor="let erro of GetErros(formDelete.get('id')!)">{{erro}}</small><br>
+            <input type="text" formControlName="enderecoSlug" maxlength="20" placeholder="informe o id do endereco">
+            <small *ngFor="let erro of GetErros(formDelete.get('enderecoSlug')!)">{{erro}}</small><br>
 
             <button type="submit">Deletar</button>
         </form>

@@ -17,6 +17,7 @@ import { AppcomponentComponent } from './appcomponent/appcomponent.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ClienteControllerComponent } from './controlers/cliente-controller/cliente-controller.component';
 import { EnderecoControllerComponent } from './controlers/endereco-controller/endereco-controller.component';
+import { MarcaProdutoControllerComponent } from './controllers/marca-produto-controller/marca-produto-controller.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { EnderecoControllerComponent } from './controlers/endereco-controller/en
     AppcomponentComponent,
     ClienteControllerComponent,
     EnderecoControllerComponent,
+    MarcaProdutoControllerComponent,
   ],
   imports: [
     BrowserModule,

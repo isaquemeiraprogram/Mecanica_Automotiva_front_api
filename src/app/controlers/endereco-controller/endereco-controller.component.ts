@@ -70,11 +70,12 @@ export class EnderecoControllerComponent implements OnInit {
 
   GerarFormDelete() {
     this.formDelete = this.fb.group({
-      id: ["", [Validators.required, Validators.maxLength(20)]]
+      enderecoSlug: ["", [Validators.required, Validators.maxLength(20)]]
     })
   }
 
   //universais
+
   GetErros(control: AbstractControl): string[] {
     return GetErrosService.GetErro(control);
   }
@@ -99,7 +100,22 @@ export class EnderecoControllerComponent implements OnInit {
         this.getReturnList = dados;
         console.log("dados recebidos", dados);
       },
-      error: er => console.error("falha na requisicao", er)
+      error: (er: any) => {
+        console.error("falha na requisicao de endereco", er);
+
+        //setErrors cria uma validacao temporaria
+        // que recebe um erro no parametro para tornar o campo invalido
+        //backend :er erro com nome de backend
+
+        const controle = this.formGetCpf.get('cpf');
+        if (controle) {
+          //setErrors apaga todas as outras validacoes pra captar so o erro do back
+          //se quiser salvar as validacoes anteriores crie uma var pra guardar
+          const errosAtuais = controle.errors || {}
+          controle.setErrors({ ...errosAtuais, backend: er })
+        }
+      }
+
     })
   }
 
@@ -120,7 +136,16 @@ export class EnderecoControllerComponent implements OnInit {
         this.addReturn = dados,
           console.log("Endereço adicionado" + dados)
       },
-      error: er => console.error("falha na requisicao de endereco", er)
+      error: (er: any) => {
+        console.error("falha na requisicao de endereco", er)
+        const controle = this.formAdd.get('clienteCpf')
+
+        if (controle) {
+          const errosAtuais = controle.errors || {};
+          controle.setErrors({ ...errosAtuais, backend: er })
+        }
+
+      }
     })
   }
 
@@ -128,7 +153,7 @@ export class EnderecoControllerComponent implements OnInit {
   updateReturn: Endereco = ObjectFactoryService.CriarEnderecoVazio()
 
   UpdateEnderecoAsync() {
-    
+
     if (this.formPut.invalid) {
       this.formPut.markAllAsTouched();
       return;
@@ -145,7 +170,15 @@ export class EnderecoControllerComponent implements OnInit {
         this.updateReturn = dados,
           console.log("Endereco Atualizado" + dados)
       },
-      error: er => console.error("falha na requisicao de endereco", er)
+      error: (er: any) => {
+        console.error("falha na requisicao de endereco", er)
+        const controle = this.formPut.get('enderecoSlug')
+
+        if (controle) {
+          const errosAtuais = controle.errors || {}
+          controle.setErrors({ ...errosAtuais, backend: er })
+        }
+      }
     })
   }
 
@@ -159,14 +192,22 @@ export class EnderecoControllerComponent implements OnInit {
     //nao faca isso o form sempre retorna um objeto e nao string
     //const id = this.formDelete.value;
     //faca assim pra pegar so a string e nao o objeto
-    const id = this.formDelete.get("id")?.value;
+    const enderecoSlug = this.formDelete.get("enderecoSlug")?.value;
 
-    return this._enderecoService.DeleteEnderecoAsync(id).subscribe({
+    return this._enderecoService.DeleteEnderecoAsync(enderecoSlug).subscribe({
       next: dados => {
         this.deleteReturn = dados,
-          console.log(dados + "endereco deletado com sucesso")
+          console.log(dados + "endereco deletado com sucesso");
       },
-      error: er => console.error("erros ao deletar", er)
+      error: (er: any) => {
+        console.error("erros ao deletar", er)
+        const controle = this.formDelete.get('enderecoSlug')
+
+        if (controle) {
+          const errosAtuais = controle.errors || {};
+          controle.setErrors({ ...errosAtuais, backend: er })
+        }
+      }
     })
   }
 
