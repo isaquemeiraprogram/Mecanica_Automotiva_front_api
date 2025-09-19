@@ -101,6 +101,7 @@ export class EnderecoControllerComponent implements OnInit {
         console.log("dados recebidos", dados);
       },
       error: (er: any) => {
+
         console.error("falha na requisicao de endereco", er);
 
         //setErrors cria uma validacao temporaria
@@ -114,8 +115,9 @@ export class EnderecoControllerComponent implements OnInit {
           const errosAtuais = controle.errors || {}
           controle.setErrors({ ...errosAtuais, backend: er })
         }
-      }
+        this.getReturnList = [];//caso der erro ele limpa o resultado anterior
 
+      }
     })
   }
 
@@ -144,7 +146,7 @@ export class EnderecoControllerComponent implements OnInit {
           const errosAtuais = controle.errors || {};
           controle.setErrors({ ...errosAtuais, backend: er })
         }
-
+        this.addReturn = ObjectFactoryService.CriarEnderecoVazio();
       }
     })
   }
@@ -178,6 +180,7 @@ export class EnderecoControllerComponent implements OnInit {
           const errosAtuais = controle.errors || {}
           controle.setErrors({ ...errosAtuais, backend: er })
         }
+        this.updateReturn = ObjectFactoryService.CriarEnderecoVazio()
       }
     })
   }
@@ -207,6 +210,7 @@ export class EnderecoControllerComponent implements OnInit {
           const errosAtuais = controle.errors || {};
           controle.setErrors({ ...errosAtuais, backend: er })
         }
+        this.deleteReturn = false
       }
     })
   }
