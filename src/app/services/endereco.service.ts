@@ -11,7 +11,7 @@ export class EnderecoService {
   private link = "https://localhost:7190/api/Endereco";
   constructor(private http: HttpClient) { }
 
-  GetEnderecoByCpf(cpf: string): Observable<Endereco[]> {     
+  GetEnderecoByCpf(cpf: string): Observable<Endereco[]> {
     //O pipe pega o resultado do this.http.get(...) - obeservable - e transforma (ou trata) esse resultado antes de chegar no subscribe.
     return this.http.get<Endereco[]>(this.link + "/cpf/" + cpf).pipe(
       catchError(this.HandlerErro)
@@ -37,8 +37,32 @@ export class EnderecoService {
   }
 
   //pega mensagem de erro do back http e lanca error no controler.ts 
-  private HandlerErro(error:HttpErrorResponse){
+  private HandlerErro(error: HttpErrorResponse) {
+
+    //quando acontece um erro de conexao error.error guarda instance of 
+    // verifica o tipo do erro e error event representa o tipo que no caso erro de conexao
+    //error event e do navegador error.status 0 qualquer outro erro de conexao
+    //ErrorEvent → erro de rede detectado pelo navegador
+
+    // ProgressEvent → outros tipos de falha de rede que não caem em ErrorEvent // outros navegadores emitem esse
+
+    // status === 0 → qualquer erro onde não houve resposta HTTP
+    if (
+      error.error instanceof ErrorEvent || //mais comum pra erro de navegador
+      error.error instanceof ProgressEvent || // em alguns navegadores e versoes do angular a resposta vem diferente
+      error.error.status === 0 //pega outros erros de conexao  (erro onde não houve resposta HTTP)
+    ) {
+      return throwError(() => (
+        //criei um obejto dentro do throw agora ele retorna um objeto e possibilita separar mensagem por tipo
+        {
+          tipoDeErro: 'conexao',
+          mensagem: "Não foi possível conectar ao servidor. Verifique sua conexão ou se a API está disponível."
+        }
+      ))
+    }
+
     const mensagemBackErro = error.error?.message || error.message || "Erro desconecido";
-    return throwError(() => mensagemBackErro) //retorna string
+    return throwError(() => ({ tipoDeErro: 'backend', mensagemBackErro })) //retorna string
   }
 }
+//error.error = primeiro o erro bruto e segugundo o valor dele

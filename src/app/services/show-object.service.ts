@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cliente } from '../models/cliente.model';
 import { Endereco } from '../models/endereco.model';
-import { flatMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

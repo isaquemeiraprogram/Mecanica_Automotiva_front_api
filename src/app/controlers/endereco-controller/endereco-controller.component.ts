@@ -108,13 +108,25 @@ export class EnderecoControllerComponent implements OnInit {
         // que recebe um erro no parametro para tornar o campo invalido
         //backend :er erro com nome de backend
 
-        const controle = this.formGetCpf.get('cpf');
-        if (controle) {
-          //setErrors apaga todas as outras validacoes pra captar so o erro do back
-          //se quiser salvar as validacoes anteriores crie uma var pra guardar
-          const errosAtuais = controle.errors || {}
-          controle.setErrors({ ...errosAtuais, backend: er })
+        if (er.tipoDeErro === 'conexao') {
+          alert(er.mensagem)
+        } else if (er.tipoDeErro === 'backend') {
+
+          //pega o campo e faz seterror pra transformar os erros que vem do back no service em validacoes de form
+          //o service pega erros do back e lanca aqui no error:er
+
+          const controle = this.formGetCpf.get('cpf');
+          if (controle) {
+
+            //setErrors apaga todas as outras validacoes pra captar so o erro do back
+            //se quiser salvar as validacoes anteriores crie uma var pra guardar
+
+            const errosAtuais = controle.errors || {}
+            controle.setErrors({ ...errosAtuais, backend: [er.mensagemBackErro] })
+            //Aqui você está dizendo: A chave é backend O valor é um array contendo er.mensagemBackErro
+          }
         }
+
         this.getReturnList = [];//caso der erro ele limpa o resultado anterior
 
       }

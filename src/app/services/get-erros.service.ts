@@ -4,12 +4,12 @@ import { AbstractControl } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
-export class GetErrosService { // é o mesmo que handler erro
+export class GetErrosService { 
 
   //abstract control permite pegar campode qualquer formulario
   //control e padrao pra pegar campo
   constructor() { }
-  
+
   //erros front control erros do campo, backEndErrors erros da requisicao
   //recebe o campo, e a lista de erros que deu no back se houver e retora uma lista
   //backendErrors é inicializado como array vazio ([]) por padrão:
@@ -25,12 +25,10 @@ export class GetErrosService { // é o mesmo que handler erro
     if (control.errors['maxlength']) erros.push(`limite de caracteres excedido`);
     if (control.errors['pattern']) erros.push('Formato inválido');
 
-    
-    //adiciona a lista de erros do back alista
-    if (control.errors['backend']){
-      erros.push(...control.errors['backend'])
-    }
 
-    return erros;    
+    //adiciona a lista de erros do back a lista
+    if (control.errors['backend']) erros.push(...control.errors['backend'])
+
+    return erros;
   }
 }

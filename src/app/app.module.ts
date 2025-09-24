@@ -12,12 +12,9 @@ import { PecasDeModificacaoComponent } from './pages/pecas-de-modificacao/pecas-
 import { AgendarComponent } from './pages/agendar/agendar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TestesComponent } from './pages/testes/testes.component';
-import { AppComponentComponent } from './app.component/app.component.component';
-import { AppcomponentComponent } from './appcomponent/appcomponent.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ClienteControllerComponent } from './controlers/cliente-controller/cliente-controller.component';
 import { EnderecoControllerComponent } from './controlers/endereco-controller/endereco-controller.component';
-import { MarcaProdutoControllerComponent } from './controllers/marca-produto-controller/marca-produto-controller.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +25,8 @@ import { MarcaProdutoControllerComponent } from './controllers/marca-produto-con
     PecasDeModificacaoComponent,
     AgendarComponent,
     TestesComponent,
-    AppComponentComponent,
-    AppcomponentComponent,
     ClienteControllerComponent,
     EnderecoControllerComponent,
-    MarcaProdutoControllerComponent,
   ],
   imports: [
     BrowserModule,
