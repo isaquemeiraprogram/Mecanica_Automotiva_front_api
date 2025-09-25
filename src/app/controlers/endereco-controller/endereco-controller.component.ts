@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, MinLengthValidator, Validators
 import { Observable, Subscriber } from 'rxjs';
 import { Endereco, EnderecoDto } from 'src/app/models/endereco.model';
 import { EnderecoService } from 'src/app/services/endereco.service';
-import { GetErrosService } from 'src/app/services/get-erros.service';
+import { HandlerErroService } from 'src/app/services/handler-erro.service';
 import { ObjectFactoryService } from 'src/app/services/object-factory.service';
 import { ShowObjectService } from 'src/app/services/show-object.service';
 
@@ -19,7 +19,7 @@ export class EnderecoControllerComponent implements OnInit {
   formPut!: FormGroup;
   formDelete!: FormGroup;
 
-  constructor(private fb: FormBuilder, private _enderecoService: EnderecoService, private _erros: GetErrosService) { }
+  constructor(private fb: FormBuilder, private _enderecoService: EnderecoService, private _erros: HandlerErroService) { }
 
   ngOnInit(): void {
     this.GerarFormGetByCpf();
@@ -76,8 +76,8 @@ export class EnderecoControllerComponent implements OnInit {
 
   //universais
 
-  GetErros(control: AbstractControl): string[] {
-    return GetErrosService.GetErro(control);
+  GetErros(campo: AbstractControl): string[] {
+    return HandlerErroService.MessageErrorCamp(campo);
   }
 
   ShowObject(endereco: Endereco): string[] {
@@ -104,13 +104,13 @@ export class EnderecoControllerComponent implements OnInit {
 
         console.error("falha na requisicao de endereco", er);
 
-        //setErrors cria uma validacao temporaria
-        // que recebe um erro no parametro para tornar o campo invalido
+        //setErrors cria uma validacao temporaria 
+        //que recebe um erro no parametro para tornar o campo invalido
         //backend :er erro com nome de backend
 
-        if (er.tipoDeErro === 'conexao') {
-          alert(er.mensagem)
-        } else if (er.tipoDeErro === 'backend') {
+        if (er.type === 'conexao') {
+          alert(er.messageConnectionError)
+        } else if (er.type === 'backend') {
 
           //pega o campo e faz seterror pra transformar os erros que vem do back no service em validacoes de form
           //o service pega erros do back e lanca aqui no error:er
@@ -122,7 +122,7 @@ export class EnderecoControllerComponent implements OnInit {
             //se quiser salvar as validacoes anteriores crie uma var pra guardar
 
             const errosAtuais = controle.errors || {}
-            controle.setErrors({ ...errosAtuais, backend: [er.mensagemBackErro] })
+            controle.setErrors({ ...errosAtuais, backend: [er.messageBackError] })
             //Aqui você está dizendo: A chave é backend O valor é um array contendo er.mensagemBackErro
           }
         }
